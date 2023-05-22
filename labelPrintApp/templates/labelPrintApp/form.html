@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+        <div class="container">
+          <h1>Stickers Printing Software</h1>
+          <form id="sticker_form"  action="{% url 'sticker_form' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="entire-sheet-label">
+                <input type="radio" id="entire-sheet-label" name="label-type" onchange="handleLabelTypeChange()" checked>
+                For the entire cells
+              </label>
+              <select id="entire-sheet-dropdown" name="entire-sheet-dropdown">
+                <optgroup label="choose labels">
+                {% for option in options %}
+                <option value="{{option}}">{{ option }}</option>
+                {% endfor %}
+                </optgroup>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="rows-columns-label">
+                <input type="radio" id="rows-columns-label" name="label-type" onchange="handleLabelTypeChange()">
+                For a specific cell
+              </label>
+              <select id="selectedLabel" name="selectedLabel" onchange="handleLabelTypeChange()" disabled>
+                <optgroup label="choose labels">
+                  {% for option in options %}
+                  <option value="{{option}}">{{ option }}</option>
+                  {% endfor %}
+                </optgroup>
+              </select>
+              <label>row number:</label>
+              <select id="rows-dropdown" name="rows-dropdown" disabled>
+              </select>
+              <label>column number:</label>
+              <select id="columns-dropdown" name="columns-dropdown" disabled>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="csv">Upload CSV File:</label>
+              <input type="file" id="csv" name="csv" accept=".csv" required>
+            </div>
+            
+            <div class="form-group">
+              <input type="submit" id="submit-btn" value="Submit">
+            </div>
+          </form>
+        </div>
+        
+{% endblock %}

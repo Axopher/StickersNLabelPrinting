@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<script>
+    {% if message == "success" %}
+    alert("Your PDF file was created successfully.Below is your download link");
+</script>
+    <a class="download-button" href="{% url 'download_pdf' %}">Download PDF</a>
+<script>
+    {% elif message == "failed" %}
+    alert("Your PDF file generation failed. Try again");
+    window.location.href = "{% url 'sticker_form' %}"
+</script>
+<script>
+    {% else %}
+    alert("{{message}}");
+    window.location.href = "{% url 'sticker_form' %}";
+</script>
+<script>
+    {% endif %}
+</script>
+<a class="back-button" href="{% url 'sticker_form' %}" class="back-button">Go Back</a>
+</div>
+{% endblock %}
