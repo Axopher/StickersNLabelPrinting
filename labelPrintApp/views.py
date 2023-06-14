@@ -12,7 +12,12 @@ from .oddyConfig import label_data,keys
 import math 
 import csv
 
+from django.contrib.auth.decorators import login_required
+from users.decorators import *
+
 # Create your views here.
+@login_required(login_url="login")
+@allowed_users(['admin','subscribers'])
 def sticker_form(request): 
     context = {
         'label_data':label_data,
@@ -33,6 +38,7 @@ def sticker_form(request):
             entire_sheet_dropdown = int(entire_sheet_dropdown) 
             # initialization of dictionary
             label_info = label_data[entire_sheet_dropdown]
+            # fetching text color values
         else:
             selectedLabel = int(selectedLabel)
             row_num = int(rows_dropdown)
@@ -42,6 +48,7 @@ def sticker_form(request):
 
         if uploaded_file:
             print("uploaded file section")
+
 
             # Process the CSV file data
             decoded_file = uploaded_file.read().decode('utf-8').splitlines()
@@ -53,6 +60,15 @@ def sticker_form(request):
             # Create a PDF object
             pdf = FPDF(orientation='P', unit='mm', format='A4')
         
+            
+
+            # setting text color
+            text_color=label_info['text-color'][1:-1].split(',')
+            # color values
+            r = int(text_color[0])
+            g = int(text_color[1])
+            b = int(text_color[2])
+            pdf.set_text_color(r,g,b)
 
             # Fetch margins data and font related from config file                     
             print(label_info)
@@ -267,7 +283,8 @@ def sticker_form(request):
   
     return render(request, 'labelPrintApp/form.html',context=context)
 
-
+@login_required(login_url="login")
+@allowed_users(['admin','subscribers'])
 def download_pdf(request):
     # Create a download link for the PDF file
     pdf_directory = "pdf_files"

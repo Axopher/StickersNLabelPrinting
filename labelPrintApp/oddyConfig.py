@@ -11,7 +11,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     2: {
         'top_bottom_margin': 4.877,
@@ -25,7 +25,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     4: {
         'top_bottom_margin': 9.5,
@@ -39,7 +39,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     6: {
         'top_bottom_margin': 8.788,
@@ -53,7 +53,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     }
     ,
     8: {
@@ -68,7 +68,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     10: {
         'top_bottom_margin': 5.994,
@@ -82,7 +82,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     12: {
         'top_bottom_margin': 7.62,
@@ -95,7 +95,7 @@ label_data={
         'ver_cell_gap':0,'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     14: {
         'top_bottom_margin': 15.088,
@@ -108,7 +108,7 @@ label_data={
         'ver_cell_gap':0,'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     16: {
         'top_bottom_margin': 12.5,
@@ -122,7 +122,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':12,
-        'text-color':"(255,255,255)"
+        'text-color':"(255,123,150)"
     },
     18: {
         'top_bottom_margin': 8.788,
@@ -136,7 +136,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     20: {
         'top_bottom_margin': 8.788,
@@ -150,7 +150,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     21: {
         'top_bottom_margin': 15.088,
@@ -164,7 +164,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     24: {
         'top_bottom_margin': 12.979,
@@ -178,7 +178,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     30: {
         'top_bottom_margin': 2.499,
@@ -192,7 +192,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     33: {
         'top_bottom_margin': 8.89,
@@ -206,7 +206,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     40: {
         'top_bottom_margin': 0,
@@ -220,7 +220,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     48: {
         'top_bottom_margin': 21.336,
@@ -234,7 +234,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     56: {
         'top_bottom_margin': 9.144,
@@ -248,7 +248,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     65: {
         'top_bottom_margin': 10.1,
@@ -262,7 +262,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     },
     84: {
         'top_bottom_margin': 15.875,
@@ -276,7 +276,7 @@ label_data={
         'font':'helvetica',
         'emphasis':'',  #'B'(Bold)/'I'(Italic)/'U'(Underlined)/''(Normal)
         'text-size':8,
-        'text-color':"(255,255,255)"
+        'text-color':"(0,0,0)"
     }
 }
 

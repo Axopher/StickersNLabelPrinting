@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>You will see tables here</h1>
+<hr>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Subscription Plan</th>
+        <th>Amount</th>
+        <th>Payment Date</th>
+        <th>Expires on</th>
+    </tr>
+    {% for payment in payments %}
+        <tr>
+            <td>{{payment.profile}}</td>
+            <td>{{payment.subscription}}</td>
+            <td>{{payment.amount}}</td>
+            <td>{{payment.payment_date}}</td>
+            <td>{{payment.expiry_date}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

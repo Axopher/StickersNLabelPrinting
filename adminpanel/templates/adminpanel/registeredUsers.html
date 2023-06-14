@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Registered Users</h1>
+<form id="searchForm" method="GET">
+    {{profileFilter.form}}
+    <input type="submit" value="Search">
+</form>
+<hr>
+<table>
+    <tr>
+        <th>Phone Number</th>
+        <th>Username</th>
+        <th>Status</th>
+    </tr>
+    {% for profile in profiles %}
+        <tr>
+            <td>{{profile.phone}}</td>
+            <td>{{profile.username}}</td>
+            {% if profile.latest_payment_status %}
+            <td>{{ profile.latest_payment_status }}</td>
+            {% else %}
+                <td>No payment instance found.</td>
+            {% endif %} 
+        </tr>
+    {% endfor %}
+</table>
+
+{% include 'pagination.html' with queryset=profiles custom_range=custom_range  %}
+
+{% endblock %}

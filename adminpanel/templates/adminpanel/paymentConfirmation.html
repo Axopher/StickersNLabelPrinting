@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Confirm Payment</h2>
+  <div class="payment-details">
+    <p><strong>Subscription:</strong> {{ subscription_type }}</p>
+    <p><strong>Amount:</strong> {{ form.amount }}</p>
+    <p><strong>Expiry Date:</strong> {{ form.expiry_date }}</p>
+    <p><strong>Status:</strong> {{ form.status }}</p>
+    <p><strong>Phone number you provided:</strong> {{ form.profile_phone }}</p>
+    <p><strong>Phone number {{profile}} uses:</strong> {{profile.phone}}</p>
+    <p><strong>Profile of user:</strong> {{profile}}</p>
+  </div>
+<form action="{% url 'confirm_payment' %}" method="POST">
+    {% csrf_token %}
+    <button><a href="{% url 'create_payment' %}">Go Back</a></button>
+    <input type="submit" value="Confirm">
+</form>
+{% endblock %}

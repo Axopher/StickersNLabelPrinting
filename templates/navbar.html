@@ -1,2 +1,40 @@
 <header>
-</header>
+    <nav>
+      <div class="navbar">
+        <h2>
+        {% if request.user.is_authenticated %}
+        <span class="welcome">Welcome, {{ request.user }}</span>       
+        {% endif %}
+        </h2>
+        <ul class="menu">
+          <li><a href="{% url 'home' %}">Home</a></li>
+        {% if request.user.is_authenticated %}
+
+          {% for group in user.groups.all %}
+          {% if group.name == 'admin'%}
+          <li><a href="{% url 'profiles' %}">Dashboard</a></li>
+          <li><a href="{% url 'registered_users' %}">All Users</a></li>
+          <li><a href="{% url 'sticker_form' %}">Print stickers</a></li>
+          {% endif %}
+
+          {% if group.name == 'registeredUsers'%}
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          {% endif %}
+
+          {% if group.name == 'subscribers'%}
+          <li><a href="{% url 'sticker_form' %}">Print stickers</a></li>
+          {% endif %}
+
+          {% endfor %}      
+
+          <li><a href="{% url 'change_password' %}">Change Password</a></li>
+
+          <li><a href="{% url 'logout' %}">Log out</a></li>  
+          
+        {% else %}
+            <li><a href="{% url 'login' %}">Log in</a></li>
+        {% endif %}   
+        </ul>
+      </div>
+    </nav>
+  </header>
