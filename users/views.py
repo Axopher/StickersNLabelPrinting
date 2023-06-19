@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from .models import Profile,Subscription,Payment
 
 from .utils import remove_expired_users_from_group
-from .signals import createProfile
+from .signals import createProfile,createSettings
 
 from .utils import generate_current_datetime
 from datetime import timedelta
@@ -68,6 +68,7 @@ def loginUser(request):
     return render(request,"users/login_register.html",context)
 
 
+
 @unauthenticated_user
 def registerUser(request):
     if request.user.is_authenticated:
@@ -89,7 +90,8 @@ def registerUser(request):
            phone = form.cleaned_data.get('phone')
            
            createProfile(sender=User, instance=user, created=True, phone=phone) 
-
+           createSettings(sender=User, instance=user, created=True) 
+           
            group = Group.objects.get(name='registeredUsers') 
            user.groups.add(group)
 

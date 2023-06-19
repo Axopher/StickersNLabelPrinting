@@ -3,6 +3,7 @@ from django.dispatch import receiver
 
 from django.contrib.auth.models import User
 from .models import Profile
+from labelPrintApp.models import LabelConfig
 from .forms import CustomUserCreationForm
 
 
@@ -19,6 +20,15 @@ def createProfile(sender,instance,created, phone=None,**kwargs):
             phone=phone,
         )
 
+def createSettings(sender,instance,created, phone=None,**kwargs):
+    if created:
+        user = instance
+        LabelConfig.objects.create(
+            user=user
+        )
+
+
+
 def deleteUser(sender,instance,**kwargs):
     # print("delete signal triggered")
     user = instance.user
@@ -26,6 +36,7 @@ def deleteUser(sender,instance,**kwargs):
 
 # post_save.connect(createProfile,sender=User)
 post_delete.connect(deleteUser,sender=Profile)
+
 
 
 

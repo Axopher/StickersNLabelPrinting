@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'labelPrintApp.apps.LabelprintappConfig',
     'users.apps.UsersConfig',
     'adminpanel.apps.AdminpanelConfig',
-    'django_filters'
+    'django_filters',
+    'colorfield',
 ]
 
 MIDDLEWARE = [

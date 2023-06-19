@@ -15,7 +15,43 @@ import csv
 from django.contrib.auth.decorators import login_required
 from users.decorators import *
 
+from .forms import LabelConfigForm
+from .models import LabelConfig
+from .utils import hex_to_rgb
+
+import sys
+
 # Create your views here.
+
+
+@login_required(login_url="login")
+def labelSettings(request):
+    setting_data = LabelConfig.objects.get(user=request.user)
+    context = {
+        'setting_data':setting_data
+    }
+
+    return render(request,"labelPrintApp/settings.html",context)
+
+
+
+@login_required(login_url="login")
+def edit_config(request):
+    user = request.user
+    label_config = LabelConfig.objects.get(user=user) 
+    form = LabelConfigForm(instance=label_config)
+    
+    if request.method == 'POST':
+        form = LabelConfigForm(request.POST,instance=label_config)
+        if form.is_valid():
+            form.user = user
+            form.save()
+            messages.success(request,"settings saved")
+            return redirect('labelSettings')
+
+    context = {'form':form}
+    return render(request,"labelPrintApp/edit_settings.html",context)
+
 @login_required(login_url="login")
 @allowed_users(['admin','subscribers'])
 def sticker_form(request): 
@@ -23,16 +59,16 @@ def sticker_form(request):
         'label_data':label_data,
         'options' : keys
     }    
-     
+
     if request.method == 'POST':
-        uploaded_file = request.FILES.get('csv')       
+        uploaded_file = request.FILES.get('csv')  
+        print(uploaded_file)     
         # for entire cell
         entire_sheet_dropdown = request.POST.get('entire-sheet-dropdown')       
         # for a specific cell
         selectedLabel = request.POST.get('selectedLabel')
         rows_dropdown = request.POST.get('rows-dropdown')
         columns_dropdown = request.POST.get('columns-dropdown')
-
 
         if(entire_sheet_dropdown):
             entire_sheet_dropdown = int(entire_sheet_dropdown) 
@@ -49,34 +85,25 @@ def sticker_form(request):
         if uploaded_file:
             print("uploaded file section")
 
-
             # Process the CSV file data
             decoded_file = uploaded_file.read().decode('utf-8').splitlines()
             csvreader = csv.reader(decoded_file)
             data = list(csvreader)
             del data[0]
             data = data
+            
+            label_settings = LabelConfig.objects.get(user=request.user)
 
             # Create a PDF object
             pdf = FPDF(orientation='P', unit='mm', format='A4')
         
             
 
-            # setting text color
-            text_color=label_info['text-color'][1:-1].split(',')
-            # color values
-            r = int(text_color[0])
-            g = int(text_color[1])
-            b = int(text_color[2])
-            pdf.set_text_color(r,g,b)
-
             # Fetch margins data and font related from config file                     
-            print(label_info)
             left_right_margin = label_info['left_right_margin']
             top_bottom_margin = label_info['top_bottom_margin']
-            font_family = label_info['font']
-            style = label_info['emphasis']
-            text_size = label_info['text-size']                   
+                          
+
 
             # Set the margins
             pdf.set_margins(left=left_right_margin, right=left_right_margin, top=top_bottom_margin)
@@ -84,13 +111,22 @@ def sticker_form(request):
             # Set auto page break with the specified margin
             pdf.set_auto_page_break(auto=True, margin=top_bottom_margin)
 
-            # Set the font style and size
-            pdf.set_font(font_family,style,text_size)
-
             # Add a page
             pdf.add_page()
 
 
+            # getting text color values
+        
+            r,g,b = hex_to_rgb(label_settings.text_color_line1)
+            pdf.set_text_color(r,g,b)
+            # get the font family,emphasis and size
+            font_family = label_settings.font_line1
+            style = label_settings.emphasis_line1
+            text_size = label_settings.text_size_line1    
+            # Set the font style and size
+            pdf.set_font(font_family,style,text_size)
+
+            print("first phases")
             # Initializing label data
             cell_width = label_info['cell_width']
             cell_height = label_info['cell_height']
@@ -118,13 +154,18 @@ def sticker_form(request):
                             datum=data_list.pop()
                             print(datum)
                             # Outer cell frame maker
-                            pdf.cell(cell_width, cell_height, '', border=1)
+                            pdf.cell(cell_width, cell_height, '', border=0)
 
                             if(datum.startswith("http")):
                                 print("img")
                                 # Fetch the image from the web
                                 image_url = ""+datum+""
-                                image_data = urllib.request.urlopen(image_url).read()
+                                try:
+                                    image_data = urllib.request.urlopen(image_url).read()
+                                except Exception as e:
+                                    print(e)
+                                    messages.error(request,"Invalid image url")
+                                    return redirect("sticker_form")
                                 qr_img_path = 'img{}.png'.format(row * columns + col)  # Unique file path
                                 with open(qr_img_path, 'wb') as f:
                                     f.write(image_data)
@@ -156,6 +197,23 @@ def sticker_form(request):
                                 if i == 0:
                                     pdf.set_xy(pdf.get_x()-(.6059031282*cell_width), pdf.get_y()+in_cy+(1.4*in_cy))
 
+                                
+                                # getting settings values for each line
+                                text_color = getattr(label_settings, "text_color_line" + str(i + 1))
+                                font_type = getattr(label_settings, "font_line" + str(i + 1))
+                                style = getattr(label_settings, "emphasis_line" + str(i + 1))
+                                text_size = getattr(label_settings, "text_size_line" + str(i + 1))
+
+                                print("printing text color")
+                                print(text_color) 
+
+                                r,g,b = hex_to_rgb(text_color)
+
+                                pdf.set_text_color(r,g,b)
+
+                                # Set the font style and size
+                                pdf.set_font(font_type,style,text_size)
+
                                 pdf.cell((.5854490414*cell_width), (.1710914454*cell_height), datum, border=0, align="L")
                                 pdf.set_xy(pdf.get_x()-(.5854490414*cell_width), pdf.get_y()+(.1710914454*cell_height))
 
@@ -175,8 +233,6 @@ def sticker_form(request):
                             pdf.set_xy(pdf.get_x()-cell_width, pdf.get_y()+ver_cell_gap)
                         else:
                             pdf.set_xy(pdf.get_x()-cell_width,pdf.get_y()+ver_cell_gap)
-
-                    
 
                     # Save the PDF file
                     pdf_filename = 'labels.pdf'
@@ -205,7 +261,7 @@ def sticker_form(request):
                     for row in range(rows):
                         for col in range(columns):                           
                             # Outer cell frame maker
-                            pdf.cell(cell_width, cell_height, '', border=1)
+                            pdf.cell(cell_width, cell_height, '', border=0)
                             if(((row+1)==row_num) and ((col+1)==column_num)):
                                 if(datum.startswith("http")):
                                     # Fetch the image from the web
@@ -240,6 +296,23 @@ def sticker_form(request):
                                 for i, datum in enumerate(data_list):
                                     if i == 0:
                                         pdf.set_xy(pdf.get_x()-(.6059031282*cell_width), pdf.get_y()+in_cy+(1.4*in_cy))
+
+                                    # getting settings values for each line
+                                    text_color = getattr(label_settings, "text_color_line" + str(i + 1))
+                                    font_type = getattr(label_settings, "font_line" + str(i + 1))
+                                    style = getattr(label_settings, "emphasis_line" + str(i + 1))
+                                    text_size = getattr(label_settings, "text_size_line" + str(i + 1))
+
+                                    print("printing text color")
+                                    print(text_color) 
+
+                                    r,g,b = hex_to_rgb(text_color)
+
+                                    pdf.set_text_color(r,g,b)
+
+                                    # Set the font style and size
+                                    pdf.set_font(font_type,style,text_size)
+
 
                                     pdf.cell((.5854490414*cell_width), (.1710914454*cell_height), datum, border=0, align="L")
                                     pdf.set_xy(pdf.get_x()-(.5854490414*cell_width), pdf.get_y()+(.1710914454*cell_height))
@@ -278,9 +351,8 @@ def sticker_form(request):
                         return render(request,'labelPrintApp/result.html',{'message':'failed'})
                 else:
                     print("There should be only one row excluding title row")    
-                    return render(request,'labelPrintApp/result.html',{'message':'There should be only one row excluding title row'}) 
-        
-  
+                    return render(request,'labelPrintApp/result.html',{'message':'There should be only one row excluding title row'})            
+
     return render(request, 'labelPrintApp/form.html',context=context)
 
 @login_required(login_url="login")
