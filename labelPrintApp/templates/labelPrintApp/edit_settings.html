@@ -1,8 +1,169 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <div class="row" style="justify-content: center; align-items: center;">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="row gutters col">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h4 class="mb-3 text-primary">Line no. 1</h4>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.font_line1.auto_id }}">{{ form.font_line1.label}}</label>
+                                                    {{ form.font_line1 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.emphasis_line1.auto_id }}">
+                                                        {{form.emphasis_line1.label }}</label>
+                                                    {{ form.emphasis_line1 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_size_line1.auto_id }}">{{form.text_size_line1.label }}</label>
+                                                    {{ form.text_size_line1 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_color_line1.auto_id }}">{{form.text_color_line1.label }}</label>
+                                                    {{ form.text_color_line1 }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="row gutters col">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h4 class="mb-3 text-primary">Line no. 2</h4>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.font_line2.auto_id }}">{{ form.font_line2.label }}</label>
+                                                    {{ form.font_line2 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.emphasis_line2.auto_id }}">{{form.emphasis_line2.label }}</label>
+                                                    {{ form.emphasis_line2 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_size_line2.auto_id }}">{{form.text_size_line2.label }}</label>
+                                                    {{ form.text_size_line2 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_color_line2.auto_id }}">{{form.text_color_line2.label }}</label>
+                                                    {{ form.text_color_line2 }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="row gutters col">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h4 class="mb-3 text-primary">Line no. 3</h4>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.font_line3.auto_id }}">
+                                                        {{form.font_line3.label }}</label>
+                                                    {{ form.font_line3 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.emphasis_line3.auto_id }}">{{form.emphasis_line3.label }}</label>
+                                                    {{ form.emphasis_line3 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_size_line3.auto_id }}">{{form.text_size_line3.label }}</label>
+                                                    {{ form.text_size_line3 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_color_line3.auto_id }}">{{form.text_color_line3.label }}</label>
+                                                    {{ form.text_color_line3 }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="row gutters col">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h4 class="mb-3 text-primary">Line no. 4</h4>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.font_line4.auto_id }}">{{form.font_line4.label }}</label>
+                                                    {{ form.font_line4 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.emphasis_line4.auto_id }}">{{form.emphasis_line4.label }}</label>
+                                                    {{ form.emphasis_line4 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_size_line4.auto_id }}">{{form.text_size_line4.label }}</label>
+                                                    {{ form.text_size_line4 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="{{ form.text_color_line4.auto_id }}">{{form.text_color_line4.label }}</label>
+                                                    {{ form.text_color_line4 }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row gutters" style="margin-top: 20px;float:left;margin-left:4px;">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="text-right">
+                                            <a href="#"><button class="btn btn-secondary" style="background-color: #f85359;border-color: #9f2f33;width:8rem;"onmouseover="this.style.backgroundColor='#ff0000'; this.style.borderColor='#ff0000';"
+                                                onmouseout="this.style.backgroundColor='#f85359'; this.style.borderColor='#f85359';">Cancel</button></a>
+                                            <button type="submit" class="btn btn-primary" style="width:8rem;">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- end card-body-->
+                    </div>
+                    <!-- end card -->
+
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+</div>
+
 {% endblock content %}

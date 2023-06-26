@@ -1,41 +1,130 @@
-{% extends "base.html" %}
+{% extends 'quitox/base.html' %}
+{% load static %}
 {% block content %}
-<div class="container">
-	{% if page  == 'register' %}
-	<h1>Registration Form</h1>	
-	<form method="POST" action="{% url 'register' %}">
-		{% csrf_token %}
+<main>
 
-		{% for field in form %}	
-			<div class="form-group">
-			<label>{{field.label}}</label>
-			{{ field }}
-			</div>	
-			{% for error in field.errors %}
-				<p style="color:red;">{{error}}</p>
-			{% endfor %}
-		{% endfor %}
+    <!-- breadcrumb area start -->
+    <div style="height:50px;" class="breadcrumb__area breadcrumb-height p-relative grey-bg" data-background="assets/img/breadcrumb/breadcrumb.jpg" style="background-image: url(&quot;assets/img/breadcrumb/breadcrumb.jpg&quot;);">
+       <div class="breadcrumb__scroll-bottom smooth">
+          <a href="#login">
+             <i class="far fa-arrow-down"></i>
+          </a>
+       </div>
+       <div class="container">
+          <div class="row">
+             <div class="col-xxl-12">
+                <div class="breadcrumb__content text-center">
+                   <h3 class="breadcrumb__title">Login Page</h3>
+                   <div class="breadcrumb__list">
+                      <span><a href="{% url 'home' %}">Home</a></span>
+                      <span class="dvdr"><i class="fa fa-angle-right"></i></span>
+                      <span>Lets work together</span>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- breadcrumb area end -->
 
-		<div class="form-group">
-		<input type="submit" value="Register">
-		</div>	
-		<p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
-	</form>	
-	{% else %}
-	<h1>Login Form</h1>	 	
-	<form action="{% url 'login' %}" method="POST">
-		{% csrf_token %}
-		<div class="form-group">
-		<input type="text" name="username" placeholder="Username" required="">
-		</div>
-		<div class="form-group">
-		<input type="password" name="password" placeholder="Password" required="">
-		</div>	
-		<div class="form-group">
-		<input type="submit" value="login">
-		</div>								
-		<p>Don't have an account <a href="{% url 'register' %}">Sign up</a></p>
-	</form>
-	{% endif %}
-</div>
-{% endblock content %}    
+      <!--login-area-start -->
+    <div class="tp-login-area">
+       <div class="container-fluid p-0">
+          <div class="row gx-0 align-items-center">
+             <div class="col-xl-6 col-lg-6 col-12">
+                <div class="tp-login-thumb login-space sky-bg d-flex justify-content-center">
+                   <img src="{% static 'quitox/assets/img/contact/login.jpg' %}"  style="width: 100%; height: 100%; object-fit: cover;" alt="">
+                </div>
+             </div>
+             <div class="col-xl-6 col-lg-6 col-12">
+               
+                <div class="tp-login-wrapper login-space d-flex justify-content-center">
+                  {% if page  == 'register' %} 
+                  <div id="login" class="tplogin">
+                      <div class="tplogin__title">
+                         <h3 class="tp-login-title">Account Registration</h3>
+                      </div>
+                      <div class="tplogin__form">
+                         <form method="POST" action="{% url 'register' %}">
+                           {% csrf_token %}
+                           {% for field in form %}
+                            <div class="tp-mail">
+                               <label for="{{field.label}}">{{field.label}}</label>
+                               {{ field }}
+                               {% for error in field.errors %}
+                                 <p style="color:red;">{{error}}</p>
+                              {% endfor %}
+                            <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div></div>
+                            {% endfor %}
+                            <div class="tp-forgot-password d-flex justify-content-between">
+                               <div class="checkbox">
+                                  <input type="checkbox" id="Remember" name="fav_language" value="Remember">
+                                  <label for="Remember">Remember me</label>
+                               </div>
+                               <div class="forgot">
+                                  <a href="#">Forgot password?</a>
+                               </div>
+                            </div>
+                            <div class="tp-login-button">
+                               <button class="tp-btn-blue-square w-100" type="submit"><span>Sign In</span></button>
+                            </div>
+                            <div class="tp-signup d-flex justify-content-between">
+                               <div class="account">
+                                  <a href="#">Already have an account?</a>
+                               </div>
+                               <div class="signin">
+                                  <a href="{% url 'login' %}">Sign in</a>
+                               </div>
+                            </div>
+                         </form>
+                      </div>
+                   </div>
+                   {% else %}
+                   <div id="login" class="tplogin">
+                     <div class="tplogin__title">
+                        <h3 class="tp-login-title">Login your Account</h3>
+                     </div>
+                     <div class="tplogin__form">
+                        <form action="{% url 'login' %}" method="POST">
+                          {% csrf_token %}
+                           <div class="tp-mail">
+                              <label for="name">Enter your Name</label>
+                              <input type="text" name="username" placeholder="Username" required="">
+                           <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div></div>
+                           <div class="tp-password">
+                              <label for="Password">Enter Password</label>
+                              <input type="password" name="password" placeholder="Password" required="">
+                           <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div></div>
+                           <div class="tp-forgot-password d-flex justify-content-between">
+                              <div class="checkbox">
+                                 <input type="checkbox" id="Remember" name="fav_language" value="Remember">
+                                 <label for="Remember">Remember me</label>
+                              </div>
+                              <div class="forgot">
+                                 <a href="#">Forgot password?</a>
+                              </div>
+                           </div>
+                           <div class="tp-login-button">
+                              <button class="tp-btn-blue-square w-100" type="submit"><span>Sign In</span></button>
+                           </div>
+                           <div class="tp-signup d-flex justify-content-between">
+                              <div class="account">
+                                 <a href="{% url 'register' %}">Don’t have an account?</a>
+                              </div>
+                              <div class="signin">
+                                 <a href="{% url 'register' %}">Sign up now</a>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+                  {% endif %}
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- login-area-end -->
+
+ </main>
+{% endblock %}

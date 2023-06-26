@@ -7,8 +7,9 @@ urlpatterns = [
     path('logout/',views.logoutUser,name='logout'),
     path('register/',views.registerUser,name='register'),
     path('profile/',views.profile,name='profile'),
-    path('api_request/',views.api_request,name='api_request'),
+    path('api_request/<str:pk>/',views.api_request,name='api_request'),
     path('process_order/',views.processOrder,name='process_order'),
-    path('change_password/',views.changePassword,name='change_password'),                
+    path('change_password/',views.changePassword,name='change_password'),
+    path('payment_plan/',views.plan,name='payment_plan'),                   
 
 ]

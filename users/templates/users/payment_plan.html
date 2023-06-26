@@ -1,0 +1,252 @@
+{% extends 'quitox/base.html' %}
+{% load custom_filters %}
+{% block content %}
+<main>
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb__area breadcrumb-height p-relative grey-bg" data-background="assets/img/breadcrumb/breadcrumb.jpg" style="background-image: url(&quot;assets/img/breadcrumb/breadcrumb.jpg&quot;);">
+    <div class="breadcrumb__scroll-bottom smooth">
+        <a href="#price">
+            <i class="far fa-arrow-down"></i>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12">
+            <div class="breadcrumb__content text-center">
+                <h3 class="breadcrumb__title">Pricing Plan</h3>
+                <div class="breadcrumb__list">
+                    <span><a href="{% url 'home' %}">Home</a></span>
+                    <span class="dvdr"><i class="fa fa-angle-right"></i></span>
+                    <span>Pricing</span>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<!-- tp-price-area-start -->
+<div id="price" class="tp-price__area tp-price__border pt-120 pb-90 ">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-10">
+            <div class="tp-price__section text-center pb-60 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".3s" style="visibility: visible; animation-duration: 0.9s; animation-delay: 0.3s; animation-name: tpfadeUp;">
+                <h3 class="tp-section-title-sm pb-20">Pricing to suite all size of business</h3>
+                <span>*We help companies of all sizes</span>
+            </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-5 col-lg-5 col-md-5 mb-30 wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s" style="visibility: visible; animation-duration: 0.9s; animation-delay: 0.5s; animation-name: tpfadeRight;">
+                <div style="border: 2px solid var(--tp-common-pink);" class="tp-price__item tp-price__active z-index">
+                    {% with quarterly_subscription=plans|get_subscription_by_name:'Quarterly' %}
+                    <div class="tp-price__icon d-flex justify-content-between align-items-center">
+                        <span class="icon price-color-1"><i class="fas fa-star"></i></span>
+                        <span>NPR. {{ quarterly_subscription.price }}</span>
+                    </div>
+                    <h3 class="tp-price__title">3 months plan</h3>
+                    <div class="tp-price__list">
+                        <ul>
+                            <li>{{ quarterly_subscription.description }}</li>
+                        </ul>
+                    </div>
+                    <div class="tp-price__btn">
+                        <a style="background-color: var(--tp-common-pink);" class="tp-btn-border" href="{% url 'api_request' quarterly_subscription.id %}"><span>Subscribe Via Khalti</span></a>
+                    </div>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-5 mb-30 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".7s" style="visibility: visible; animation-duration: 0.9s; animation-delay: 0.7s; animation-name: tpfadeUp;">
+            <div class="tp-price__item tp-price__active z-index">
+                {% with annual_subscription=plans|get_subscription_by_name:'Annually' %}
+                <div class="tp-price__icon d-flex justify-content-between align-items-center">
+                    <span class="icon price-color-2"><i class="fas fa-badge-check"></i></span>
+                    <span>NPR. {{ annual_subscription.price }}</span>
+                </div>
+                <h3 class="tp-price__title">One Year Plan</h3>
+                <div class="tp-price__list">
+                    <ul>
+                        <li>{{ annual_subscription.description }}</li>
+                    </ul>
+                </div>
+                <div class="tp-price__btn">
+                    <a class="tp-btn-border" href="{% url 'api_request' annual_subscription.id %}"><span>Subscribe Via Khalti</span></a>
+                </div>
+                {% endwith %}
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tp-price-area-end -->
+
+<!-- tp-choose-area-start -->
+<div class="tp-choose__area pt-120 pb-90" data-background="assets/img/choose/choose-bg.png" style="background-image: url(&quot;assets/img/choose/choose-bg.png&quot;);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <div class="tp-choose__title-box text-center">
+                <h3 class="tp-section-title text-white mb-20">Why choose Quitox 🎖️</h3>
+                <h5 class="tp-choose__subtitle text-white">Download apps</h5>
+            </div>
+            <div class="tp-choose__thumb-box d-flex justify-content-center">
+                <div class="tp-choose__thumb-sm">
+                    <a href="#"><img src="assets/img/app/app-2.png" alt=""></a>
+                </div>
+                <div class="tp-choose__thumb-sm">
+                    <a href="#"><img src="assets/img/app/app-3.png" alt=""></a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tp-choose-area-end -->
+
+<!-- tp-counter-area-start -->
+<div class="tp-counter__area">
+    <div class="tp-counter__theme-bg"></div>
+    <div class="tp-counter__grey-bg"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+            <div class="tp-counter__item d-flex">
+                <div class="tp-counter__icon">
+                    <img src="assets/img/feature/fea-1.png" alt="">
+                </div>
+                <div class="tp-counter__content">
+                    <span><i class="counter">280</i>K</span>
+                    <p>Active Installation</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+            <div class="tp-counter__item d-flex">
+                <div class="tp-counter__icon">
+                    <img src="assets/img/feature/fea-2.png" alt="">
+                </div>
+                <div class="tp-counter__content">
+                    <span><i class="counter">480</i>M</span>
+                    <p>Active Installation</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+            <div class="tp-counter__item d-flex">
+                <div class="tp-counter__icon">
+                    <img src="assets/img/feature/fea-3.png" alt="">
+                </div>
+                <div class="tp-counter__content">
+                    <span><i class="counter">220</i>K</span>
+                    <p>Active Installation</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tp-counter-area-end -->
+
+<!-- tp-support-area-start -->
+<div class="tp-support__area pt-120 pb-120 grey-bg p-relative">
+    <div class="tp-support__bg">
+        <img src="assets/img/faq/faq-bg-shape.png" alt="">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <div class="tp-support__title-box text-center mb-70">
+                <h3 class="tp-section-title">Need A Support? 🎧</h3>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+            <div class="tp-support__faq">
+                <div class="tp-custom-accordio-2">
+                    <div class="accordion" id="accordionExample-2">
+                        <div class="accordion-items">
+                        <h2 class="accordion-header" id="heading-1">
+                            <button class="accordion-buttons " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                How Do I Change My Email or Password?
+                            </button>
+                        </h2>
+                        <div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample-2">
+                            <div class="accordion-body">
+                                Through the collaboration with customers in discussing needs and demand, we're able
+                                to attain mutual understanding, gain customer trust <br> to offer appropriate advice
+                            </div>
+                        </div>
+                        </div>
+                        <div class="accordion-items">
+                        <h2 class="accordion-header" id="heading-2">
+                            <button class="accordion-buttons collapsed  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="true" aria-controls="collapse-2">
+                                Can I Lock My Note App?
+                            </button>
+                        </h2>
+                        <div id="collapse-2" class="accordion-collapse collapse" aria-labelledby="heading-2" data-bs-parent="#accordionExample-2">
+                            <div class="accordion-body">
+                                Through the collaboration with customers in discussing needs and demand, we're able
+                                to attain mutual understanding, gain customer trust <br> to offer appropriate advice
+                            </div>
+                        </div>
+                        </div>
+                        <div class="accordion-items">
+                        <h2 class="accordion-header" id="heading-3">
+                            <button class="accordion-buttons collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="true" aria-controls="collapse-3">
+                                How About Data Security &amp; NDA Agreement
+                            </button>
+                        </h2>
+                        <div id="collapse-3" class="accordion-collapse collapse " aria-labelledby="heading-3" data-bs-parent="#accordionExample-2">
+                            <div class="accordion-body">
+                                Through the collaboration with customers in discussing needs and demand, we're able
+                                to attain mutual understanding, gain customer trust <br> to offer appropriate advice
+                            </div>
+                        </div>
+                        </div>
+                        <div class="accordion-items">
+                        <h2 class="accordion-header" id="heading-4">
+                            <button class="accordion-buttons collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-expanded="true" aria-controls="collapse-4">
+                                Can My Premium License Be Used For All Devices?
+                            </button>
+                        </h2>
+                        <div id="collapse-4" class="accordion-collapse collapse " aria-labelledby="heading-4" data-bs-parent="#accordionExample-2">
+                            <div class="accordion-body">
+                                Through the collaboration with customers in discussing needs and demand, we're able
+                                to attain mutual understanding, gain customer trust <br> to offer appropriate advice
+                            </div>
+                        </div>
+                        </div>
+                        <div class="accordion-items">
+                        <h2 class="accordion-header" id="heading-5">
+                            <button class="accordion-buttons collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-5" aria-expanded="true" aria-controls="collapse-5">
+                                What makes LessAccounting better than the rest?
+                            </button>
+                        </h2>
+                        <div id="collapse-5" class="accordion-collapse collapse " aria-labelledby="heading-5" data-bs-parent="#accordionExample-2">
+                            <div class="accordion-body">
+                                Through the collaboration with customers in discussing needs and demand, we're able
+                                to attain mutual understanding, gain customer trust <br> to offer appropriate advice
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tp-support-area-end -->
+
+</main>
+
+{% endblock %}
+
+
+
+
+
+

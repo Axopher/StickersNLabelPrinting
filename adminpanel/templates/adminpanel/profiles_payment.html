@@ -1,40 +1,150 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>You will see tables here</h1>
-<a href="{% url 'create_payment' %}">Create Payment</a>
-<hr>
-<form id="searchForm" method="GET">
-    {{paymentFilter.form}}
-    <input type="submit" value="Search">
-</form>
-<hr>
-<table>
-    <tr>
-        <th>Phone Number</th>
-        <th>Username</th>
-        <th>Subscription Plan</th>
-        <th>Amount</th>
-        <th>Payment Date</th>
-        <th>Expires on</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for payment in payments %}
-        <tr>
-            <td>{{payment.profile.phone}}</td>
-            <td>{{payment.profile}}</td>
-            <td>{{payment.subscription}}</td>
-            <td>{{payment.amount}}</td>
-            <td>{{payment.payment_date.date}}</td>
-            <td>{{payment.expiry_date|date:"F j, Y"}}</td>
-            <td>{{payment.status}}</td>
-            <td><a href="{% url 'profile' payment.profile %}">view</a></td>
-            <td><a href="{% url 'update_payment' payment.id %}">update</a></td>
-        </tr>
-    {% endfor %}
-</table>
+<div class="main-content">
 
-{% include 'pagination.html' with queryset=payments custom_range=custom_range  %}
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <a href="{% url 'create_payment' %}"><button type="button" class="btn btn-dark btn-rounded waves-effect waves-light"
+                        style="margin-bottom:20px;">Create Payment</button></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="basic-datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <form id="searchForm" method="GET">            
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.payment_start_date.label}}
+                                                    {{paymentFilter.form.payment_start_date}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.payment_end_date.label}}
+                                                    {{paymentFilter.form.payment_end_date}}
+                                                </div>
+                                            </div>
+                                            <div class="row">   
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.expiration_start_date.label}}
+                                                    {{paymentFilter.form.expiration_start_date}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.expiration_end_date.label}}
+                                                    {{paymentFilter.form.expiration_end_date}}
+                                                </div>
+                                            </div>
 
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.phone.label}}
+                                                    {{paymentFilter.form.phone}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.subscription.label}}
+                                                    {{paymentFilter.form.subscription}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    {{paymentFilter.form.status.label}}
+                                                    {{paymentFilter.form.status}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    <br>
+                                                    <input style="width:9rem;" class="btn btn-light waves-effect" type="submit" value="Apply Filter">
+                                                </div>
+                                            </div>
+                                                    
+                                            
+                                           
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:4rem;">
+                                    <div class="col-sm-12">
+                                        <table id="basic-datatable"
+                                            class="table dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                            role="grid" aria-describedby="basic-datatable_info" style="width: 1195px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Phone Number</th>
+                                                    <th>
+                                                        Username</th>
+                                                    <th>Subscription Plan
+                                                    </th>
+                                                    <th>
+                                                        Amount
+                                                    </th>
+                                                    <th>
+                                                        Payment Date
+                                                    </th>
+                                                    <th>
+                                                        Expires on
+                                                    </th>
+                                                    <th>
+                                                        Status
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                                {% for payment in payments %}
+                                                <tr role="row" class="odd">
+                                                    <td>{{payment.profile.phone}}</td>
+                                                    <td>{{payment.profile}}</td>
+                                                    <td>{{payment.subscription}}</td>
+                                                    <td>{{payment.amount}}</td>
+                                                    <td>{{payment.payment_date.date}}</td>
+                                                    <td>{{payment.expiry_date|date:"F j, Y"}}</td>
+                                                    <td>{{payment.status}}</td>
+                                                    <td><a href="{% url 'profile' payment.profile %}">view</a></td>
+                                                    <td><a href="{% url 'update_payment' payment.id %}">update</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% include 'pagination.html' with queryset=payments custom_range=custom_range %}
+                            </div>
+
+                        </div> <!-- end card body-->
+                    </div> <!-- end card -->
+                </div><!-- end col-->
+            </div>
+            <!-- end row-->
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    2020 © Xeloro.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design &amp; Develop by Myra
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
 {% endblock %}

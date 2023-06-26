@@ -1,30 +1,95 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Registered Users</h1>
-<form id="searchForm" method="GET">
-    {{profileFilter.form}}
-    <input type="submit" value="Search">
-</form>
-<hr>
-<table>
-    <tr>
-        <th>Phone Number</th>
-        <th>Username</th>
-        <th>Status</th>
-    </tr>
-    {% for profile in profiles %}
-        <tr>
-            <td>{{profile.phone}}</td>
-            <td>{{profile.username}}</td>
-            {% if profile.latest_payment_status %}
-            <td>{{ profile.latest_payment_status }}</td>
-            {% else %}
-                <td>No payment instance found.</td>
-            {% endif %} 
-        </tr>
-    {% endfor %}
-</table>
 
-{% include 'pagination.html' with queryset=profiles custom_range=custom_range  %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="basic-datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <form id="searchForm" method="GET">
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    {{profileFilter.form.phone.label}}
+                                                    {{profileFilter.form.phone}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    {{profileFilter.form.username.label}}
+                                                    {{profileFilter.form.username}}
+                                                </div>
+                                                <div class="col-sm">
+                                                    <br>
+                                                    <input class="btn btn-light waves-effect" type="submit" value="Apply Filter">
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </form>
+                                    </div>
+                                </div>
 
+                                <div class="row" style="margin-top:2rem;">
+                                    <div class="col-sm-12">
+                                        <table id="basic-datatable"
+                                            class="table dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                            role="grid" aria-describedby="basic-datatable_info" style="width: 1195px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Phone Number</th>
+                                                    <th>Username</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                                {% for profile in profiles %}
+                                                <tr role="row" class="odd">
+                                                    <td>{{profile.phone}}</td>
+                                                    <td>{{profile.username}}</td>
+                                                    {% if profile.latest_payment_status %}
+                                                    <td>{{ profile.latest_payment_status }}</td>
+                                                    {% else %}
+                                                    <td>No payment instance found.</td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% include 'pagination.html' with queryset=payments custom_range=custom_range %}
+                            </div>
+
+                        </div> <!-- end card body-->
+                    </div> <!-- end card -->
+                </div><!-- end col-->
+            </div>
+            <!-- end row-->
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    2020 © Xeloro.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design &amp; Develop by Myra
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
 {% endblock %}
+

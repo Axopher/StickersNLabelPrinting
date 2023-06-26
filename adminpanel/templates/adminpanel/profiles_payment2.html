@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>You will see tables here</h1>
+<a href="{% url 'create_payment' %}">Create Payment</a>
+<hr>
+<form id="searchForm" method="GET">
+    {{paymentFilter.form}}
+    <input type="submit" value="Search">
+</form>
+<hr>
+<table>
+    <tr>
+        <th>Phone Number</th>
+        <th>Username</th>
+        <th>Subscription Plan</th>
+        <th>Amount</th>
+        <th>Payment Date</th>
+        <th>Expires on</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for payment in payments %}
+        <tr>
+            <td>{{payment.profile.phone}}</td>
+            <td>{{payment.profile}}</td>
+            <td>{{payment.subscription}}</td>
+            <td>{{payment.amount}}</td>
+            <td>{{payment.payment_date.date}}</td>
+            <td>{{payment.expiry_date|date:"F j, Y"}}</td>
+            <td>{{payment.status}}</td>
+            <td><a href="{% url 'profile' payment.profile %}">view</a></td>
+            <td><a href="{% url 'update_payment' payment.id %}">update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% include 'pagination.html' with queryset=payments custom_range=custom_range  %}
+
+{% endblock %}

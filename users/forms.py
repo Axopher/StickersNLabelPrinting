@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import PasswordChangeForm
 
 def validate_ten_digits(value):
     if len(str(value)) != 10:
@@ -49,3 +50,13 @@ class CustomUserCreationForm(UserCreationForm):
     #     widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'})
     # )
     
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add your desired CSS class to the form fields
+        self.fields['old_password'].widget.attrs['class'] = 'form-control'
+        self.fields['old_password'].widget.attrs['placeholder'] = 'Enter Your Old Password'
+        self.fields['new_password1'].widget.attrs['class'] = 'form-control'
+        self.fields['new_password1'].widget.attrs['placeholder'] = 'Enter Your New Password'
+        self.fields['new_password2'].widget.attrs['class'] = 'form-control'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'Confirm Your New password'

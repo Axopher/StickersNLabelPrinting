@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Quitox Software & IT Solutions HTML Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'quitox/assets/img/favicon.png' %}">
+
+        <!-- CSS here -->
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/custom-animation.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/swiper-bundle.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/meanmenu.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/font-awesome-pro.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/spacing.css' %}">
+        <link rel="stylesheet" href="{% static 'quitox/assets/css/style.css' %}">
+
+
+        
+    </head>
+    <body>     
+        {% include 'quitox/navbar.html' %}
+
+        {% include 'alerts.html' %}
+
+        {% block content %}
+
+        {% endblock %}
+        {% include 'quitox/footer.html' %}
+    <!-- JS here -->
+    <script src="{% static 'quitox/assets/js/jquery.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/waypoints.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/swiper-bundle.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/slick.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/magnific-popup.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/counterup.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/wow.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/nice-select.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/meanmenu.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/isotope-pkgd.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/imagesloaded-pkgd.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/ajax-form.js' %}"></script>
+    <script src="{% static 'quitox/assets/js/main.js' %}"></script>
+    </body>
+</html>

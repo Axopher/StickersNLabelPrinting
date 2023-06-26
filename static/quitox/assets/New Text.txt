@@ -1,0 +1,1 @@
+sass --watch "C:\Users\Admin\Dropbox\Farhan Firoz\quitox\assets\scss\main.scss":"C:\Users\Admin\Dropbox\Farhan Firoz\quitox\assets\css\style.css"

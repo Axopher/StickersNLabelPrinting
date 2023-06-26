@@ -1,27 +1,114 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if 'subscribers' in groups %}
-    <!-- User is subscribed -->
-    <h2>Your subscription is active</h2>
-    <div class="container-for-subscription">
-        <p>    
-        <a href="{% url 'api_request' %}" class="subscribe-button">Extend Subscription</a>
-        </p>
-        </div>  
-{% else %}
-    <!-- User is not subscribed -->
-    <div class="container-for-subscription">
-    <p>    
-    <a href="{% url 'api_request' %}" class="subscribe-button">Subscribe via Khalti</a>
-    </p>
-    </div>    
-{% endif %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h2 class="card-title">Subscription Details</h2>
+    
+                            <div class="table-responsive">
+                                <table class="table table-centered table-striped table-nowrap mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Subscription Plan</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Price</th>
+                                            <th>Subscribed Date</th>
+                                            <th>Expiry Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for payment in payment_details %}
+                                        <tr>
+                                            <td>
+                                                {{payment.subscription}} plan
+                                            </td>
+                                            <td>
+                                                {{payment.profile.phone}}
+                                            </td>
+                                            <td>
+                                                {{payment.profile.email}}
+                                            </td>
+                                            <td>
+                                                {{payment.amount}}
+                                            </td>
+                                            <td>
+                                                {{payment.payment_date}}
+                                            </td>
+                                            <td>
+                                                {{payment.expiry_date}}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+    
+                        </div>
+                        <!--end card body-->
+                        <!--end card body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="card-title">Subscription Status</h4>
+                                    {% if 'subscribers' in groups %}
+                                    <p class="card-subtitle mb-4">
+                                        <span class="badge badge-success badge-pill">Active</span>
+                                    </p>
+                                    {% else %}
+                                    <p class="card-subtitle mb-4">
+                                        <span class="badge badge-dark badge-pill">Inactive</span>
+                                        <br>
+                                        <br>
+                                        <a href="{% url 'payment_plan' %}"><button type="button" class="btn btn-success btn-sm btn-block waves-effect waves-light">Get Subscription</button></a>
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                        <!--end card body-->
+                    </div>
+                    <!--end card-->
+                </div><!-- end col -->
+            </div>
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    2020 © Xeloro.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design &amp; Develop by Myra
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+
+
+
+
+
 
 {% endblock %}
-
-
-
-
-
-

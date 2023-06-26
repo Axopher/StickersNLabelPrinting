@@ -1,24 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-<script>
-    {% if message == "success" %}
-    alert("Your PDF file was created successfully.Below is your download link");
-</script>
-    <a class="download-button" href="{% url 'download_pdf' %}">Download PDF</a>
-<script>
-    {% elif message == "failed" %}
-    alert("Your PDF file generation failed. Try again");
-    window.location.href = "{% url 'sticker_form' %}"
-</script>
-<script>
-    {% else %}
-    alert("{{message}}");
-    window.location.href = "{% url 'sticker_form' %}";
-</script>
-<script>
-    {% endif %}
-</script>
-<a class="back-button" href="{% url 'sticker_form' %}" class="back-button">Go Back</a>
-</div>
-{% endblock %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <div class="row" style="justify-content: center; align-items: center;">
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="container">
+                                <script>
+                                    {% if message == "success" %}
+                                    alert("Your PDF file was created successfully.Below is your download link");
+                                </script>
+                                <a class="btn btn-primary waves-effect waves-light" href="{% url 'download_pdf' %}">Download PDF</a>
+                                <script>
+                                    {% elif message == "failed" %}
+                                    alert("Your PDF file generation failed. Try again");
+                                    window.location.href = "{% url 'sticker_form' %}"
+                                </script>
+                                <script>
+                                    {% else %}
+                                    alert("{{message}}");
+                                    window.location.href = "{% url 'sticker_form' %}";
+                                </script>
+                                <script>
+                                    {% endif %}
+                                </script>
+                                <a class="btn btn-dark waves-effect waves-light" href="{% url 'sticker_form' %}">Go Back</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,41 +1,96 @@
-<header>
-    <nav>
-      <div class="navbar">
-        <h2>
-        {% if request.user.is_authenticated %}
-        <span class="welcome">Welcome, {{ request.user }}</span>       
-        {% endif %}
-        </h2>
-        <ul class="menu">
-          <li><a href="{% url 'home' %}">Home</a></li>
-        {% if request.user.is_authenticated %}
-
-          {% for group in user.groups.all %}
-          {% if group.name == 'admin'%}
-          <li><a href="{% url 'profiles' %}">Dashboard</a></li>
-          <li><a href="{% url 'registered_users' %}">All Users</a></li>
-          <li><a href="{% url 'sticker_form' %}">Print stickers</a></li>
-          {% endif %}
-
-          {% if group.name == 'registeredUsers'%}
-          <li><a href="{% url 'profile' %}">Profile</a></li>
-          {% endif %}
-
-          {% if group.name == 'subscribers'%}
-          <li><a href="{% url 'sticker_form' %}">Print stickers</a></li>
-          {% endif %}
-
-          {% endfor %}      
-
-          <li><a href="{% url 'change_password' %}">Change Password</a></li>
-          <li><a href="{% url 'labelSettings' %}">settings</a></li>
-
-          <li><a href="{% url 'logout' %}">Log out</a></li>  
-          
-        {% else %}
-            <li><a href="{% url 'login' %}">Log in</a></li>
-        {% endif %}   
-        </ul>
+<div class="header-border"></div>
+<header id="page-topbar">
+  <div class="navbar-header">
+    {% for group in user.groups.all %}
+    {% if group.name == 'admin' or group.name == 'subscribers' %}
+    <div class="d-flex align-items-left">
+      <a href="{% url 'sticker_form' %}"><button type="button" class="btn btn-light waves-effect">Print
+          Stickers</button></a>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="d-flex align-items-left">
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="dropdown d-inline-block ml-2">
+        <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <!-- <img class="rounded-circle header-profile-user" src="#"
+                          alt="Header Avatar"> -->
+          <span class="d-none d-sm-inline-block ml-1">{{request.user}}</span>
+          <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item d-flex align-items-center justify-content-between" href="{% url 'change_password' %}">
+            Change Password
+          </a>
+          <a class="dropdown-item d-flex align-items-center justify-content-between" href="{% url 'edit_config' %}">
+            Settings
+          </a>
+          <a class="dropdown-item d-flex align-items-center justify-content-between" href="{% url 'logout' %}">
+            <span>Log Out</span>
+          </a>
+        </div>
       </div>
-    </nav>
-  </header>
+    </div>
+  </div>
+</header>
+
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+  <div data-simplebar class="h-100">
+    <div class="navbar-brand-box">
+      <a href="index.html" class="logo">
+        <i class="mdi mdi-album"></i>
+        <span>
+          Xeloro
+        </span>
+      </a>
+    </div>
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <li class="menu-title">Menu</li>
+        {% if request.user.is_authenticated %}
+
+        {% for group in user.groups.all %}
+        {% if group.name == 'admin'%}
+        <li>
+          <a href="{% url 'profiles' %}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>Subscribed
+              Users</span></a>
+        </li>
+        <li>
+          <a href="{% url 'registered_users' %}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>All
+              Users</span></a>
+        </li>
+        {% endif %}
+
+        {% if group.name == 'registeredUsers'%}
+        <li><a href="{% url 'profile' %}" class="waves-effect"><i
+              class="mdi mdi-home-analytics"></i><span>Profile</span></a></li>
+        {% endif %}
+        {% if group.name == 'subscribers'%}
+        {% endif %}
+        {% endfor %}
+        <li>
+          <a href="{% url 'change_password' %}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>Change
+              Password</span></a>
+        </li>
+        <li>
+          <a href="{% url 'edit_config' %}" class="waves-effect"><i
+              class="mdi mdi-diamond-stone"></i><span>Settings</span></a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>Logout</span></a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+    <!-- Sidebar -->
+  </div>
+</div>
+<!-- Left Sidebar End -->
+
+
+</header>

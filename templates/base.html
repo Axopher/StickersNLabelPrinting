@@ -2,33 +2,82 @@
 {% load static %}
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+        <meta charset="utf-8" />
+        <title> Xeloro - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="MyraStudio" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'xeloro/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'xeloro/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'xeloro/assets/css/theme.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- sweet alert -->
+        <!-- <link href="{% static 'xeloro/plugins/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"> -->
+
+        <link href="{% static 'styles/main.css' %}" rel="stylesheet" type="text/css">
+
     </head>
     <body>
+        <!-- Begin page -->
+        <div id="layout-wrapper">
         {% include "navbar.html" %}
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    {{ message }}
-                    <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-                </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        
+
+        {% include 'alerts.html' %}
+
         {% block content %}
 
         {% endblock %}
+        </div>
+        <!-- END layout-wrapper -->
         
-        
+        <!-- Overlay-->
+        <div class="menu-overlay"></div>
+         
+    
+    <!-- jQuery  -->
+    <script src="{% static 'xeloro/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'xeloro/assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'xeloro/assets/js/metismenu.min.js' %}"></script>
+    <script src="{% static 'xeloro/assets/js/waves.js' %}"></script>
+    <script src="{% static 'xeloro/assets/js/simplebar.min.js' %}"></script>
 
-    <script src="{% static "js/main.js" %}"></script>
-    <script src="{% static "js/pagination.js" %}"></script>    
+
+    <!-- Sparkline Js-->
+    <script src="{% static 'xeloro/plugins/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Js-->
+    <script src="{% static 'xeloro/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+
+    <!-- Chart Custom Js-->
+    <script src="{% static 'xeloro/assets/pages/knob-chart-demo.js' %}"></script>
+
+
+    <!-- Morris Js-->
+    <script src="{% static 'xeloro/plugins/morris-js/morris.min.js' %}"></script>
+
+    <!-- Raphael Js-->
+    <script src="{% static 'xeloro/plugins/raphael/raphael.min.js' %}"></script>
+
+    <!-- Custom Js -->
+    <script src="{% static 'xeloro/assets/pages/dashboard-demo.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'xeloro/assets/js/theme.js' %}"></script>    
+    
+    <!-- sweet alert js -->
+    <!-- <script src="{% static 'xeloro/plugins/sweetalert2/sweetalert2.min.js' %}"></script>     -->
+    <!-- <script src="{% static 'xeloro/assets/pages/sweet-alert-demo.js' %}" aria-hidden="true"></script> -->
+
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/pagination.js' %}"></script>    
+
+
+
     </body>
 </html>

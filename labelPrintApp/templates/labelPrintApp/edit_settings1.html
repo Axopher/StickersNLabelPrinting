@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  
+  <h2>For line 1,</h2>
+  <label for="{{ form.font_line1.auto_id }}">{{ form.font_line1.label }}</label>
+  {{ form.font_line1 }}
+  <br>  
+  <label for="{{ form.emphasis_line1.auto_id }}">{{ form.emphasis_line1.label }}</label>
+  {{ form.emphasis_line1 }}
+  <br>  
+  <label for="{{ form.text_size_line1.auto_id }}">{{ form.text_size_line1.label }}</label>
+  {{ form.text_size_line1 }}
+  <br> 
+  <label for="{{ form.text_color_line1.auto_id }}">{{ form.text_color_line1.label }}</label>
+  {{ form.text_color_line1 }}
+  <br>
+  <hr>
+
+  <h2>For line 2,</h2>
+  <label for="{{ form.font_line2.auto_id }}">{{ form.font_line2.label }}</label>
+  {{ form.font_line2 }}
+  <br>
+  <label for="{{ form.emphasis_line2.auto_id }}">{{ form.emphasis_line2.label }}</label>
+  {{ form.emphasis_line2 }}
+  <br>
+  <label for="{{ form.text_size_line2.auto_id }}">{{ form.text_size_line2.label }}</label>
+  {{ form.text_size_line2 }}
+  <br>
+  <label for="{{ form.text_color_line2.auto_id }}">{{ form.text_color_line2.label }}</label>
+  {{ form.text_color_line2 }}
+  <br>
+  <hr>
+  
+  <h2>For line 3,</h2>
+  <label for="{{ form.font_line3.auto_id }}">{{ form.font_line3.label }}</label>
+  {{ form.font_line3 }}
+  <br>
+  <label for="{{ form.emphasis_line3.auto_id }}">{{ form.emphasis_line3.label }}</label>
+  {{ form.emphasis_line3 }}
+  <br>
+  <label for="{{ form.text_size_line3.auto_id }}">{{ form.text_size_line3.label }}</label>
+  {{ form.text_size_line3 }}
+  <br>
+  <label for="{{ form.text_color_line3.auto_id }}">{{ form.text_color_line3.label }}</label>
+  {{ form.text_color_line3 }}
+  <br>
+  
+  <h2>For line 4,</h2>
+  <label for="{{ form.font_line4.auto_id }}">{{ form.font_line4.label }}</label>
+  {{ form.font_line4 }}
+  <br> 
+  <label for="{{ form.emphasis_line4.auto_id }}">{{ form.emphasis_line4.label }}</label>
+  {{ form.emphasis_line4 }}
+  <br>
+  <label for="{{ form.text_size_line4.auto_id }}">{{ form.text_size_line4.label }}</label>
+  {{ form.text_size_line4 }}
+  <br> 
+  <label for="{{ form.text_color_line4.auto_id }}">{{ form.text_color_line4.label }}</label>
+  {{ form.text_color_line4 }}
+  <br>
+  <hr>
+
+  <h1><button type="submit">Save</button></h1>
+</form>
+{% endblock content %}

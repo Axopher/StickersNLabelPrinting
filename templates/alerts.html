@@ -1,0 +1,44 @@
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} show-notification  alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>    
+    {% endfor %}
+{% endif %}
+
+<style>
+@keyframes show-toast{
+    0% {bottom: -100%;}
+    20% { bottom: 100px;}
+    80% { bottom: 100px;}
+    100% { bottom: 0;}
+}
+
+.show-notification{
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name:show-toast;
+    animation-duration: 5s;
+}
+
+.show-notification{
+    z-index: 1; /* specify the desired value */
+}
+
+    
+</style>
+
+<script>
+    // Close button functionality
+    var closeButtons = document.querySelectorAll('.alert .close');
+    closeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var alert = this.closest('.alert');
+            alert.remove();
+        });
+    });
+</script>

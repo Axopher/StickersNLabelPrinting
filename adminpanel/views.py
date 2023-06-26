@@ -89,10 +89,17 @@ def createPayment(request):
     form = PaymentForm()
     if request.method == "POST":
         form = PaymentForm(request.POST)
+
+        expiry_date = request.POST.get('expiry_date')
+        # Convert expiry_date to a datetime object
+        expiry_datetime = datetime.strptime(expiry_date, "%Y-%m-%dT%H:%M")
+
+        # Format the expiry_datetime as a readable string
+        formatted_expiry_date = expiry_datetime.strftime("%B %d, %Y %I:%M %p")
+
         phone = request.POST['profile_phone']
         subscription_id = request.POST['subscription']
         subscription_type = Subscription.objects.get(id=subscription_id) 
-        print(subscription_type)
         try:
             profile = Profile.objects.get(phone=phone)
             if profile and form.is_valid():
@@ -106,7 +113,7 @@ def createPayment(request):
                 }
                 request.session['payment_form_data'] = form_data  # Store form data in the session       
                                      
-                return render(request,"adminpanel/paymentConfirmation.html",{'form':form_data,'profile':profile,'subscription_type':subscription_type})                
+                return render(request,"adminpanel/paymentConfirmation.html",{'form':form_data,'profile':profile,'subscription_type':subscription_type,'formatted_expiry_date':formatted_expiry_date})                
         except Profile.DoesNotExist:
             print("profile does not exist")
             messages.error(request, 'Profile not found for the provided phone number.')
@@ -184,13 +191,16 @@ def confirmPayment(request):
             del request.session['payment_form_data']
             print("payment session deleted")
             print(payment)
-            return HttpResponse("Payment created successfully.")
+            messages.success(request,"Payment created successfully.")
+            return redirect("profiles")
 
         except ObjectDoesNotExist:
-            return HttpResponse("Payment creation failed. Invalid profile or subscription.")
+            messages.error(request,"Payment creation failed. Invalid profile or subscription.")
+            return redirect("create_payment")
 
     else:
-        return HttpResponse("Payment creation failed.")
+        messages.error(request,"Payment creation failed. Invalid profile or subscription.")
+        return redirect("create_payment")
 
 
 def updatePayment(request,pk):

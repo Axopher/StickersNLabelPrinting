@@ -1,19 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
 {% block content %}
-<h1>Payment Form</h1>
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-        {{ field.label }}
-        {% if field.name == 'expiry_date' %}
-            <input type="datetime-local" name="{{ field.name }}" value="{{ field.value|date:'Y-m-d\TH:i' }}" required>
-        {% elif field.name == 'profile_phone' %}
-            <input type="number" name="{{ field.name }}" value="{{phone}}" required>
-        {% else %}
-            {{ field }}
-        {% endif %}
-        <br>
-    {% endfor %}
-    <input type="submit">
-</form>
+
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <div class="row" style="justify-content: center; align-items: center;">
+                <div class="col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img src="{% static 'images/khalti.jpeg' %}" alt="car-key" border="0" style="width:140px;height:90px;">
+                                <h2 class="text-center">Create Manual Payment</h2>
+                                <br>
+                                <br>
+                                <form method="POST" class="bootstrap-form">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                    <div class="form-group row">
+                                      <label for="{{ field.id_for_label }}" class="col-sm-2 col-form-label">{{ field.label|upper }}</label>
+                                      <div class="col-sm-10">
+                                        {% if field.name == 'expiry_date' %}
+                                        <input type="datetime-local" name="{{ field.name }}" value="{{ field.value|date:'Y-m-d\TH:i' }}" required class="form-control">
+                                        {% elif field.name == 'profile_phone' %}
+                                        <input type="number" name="{{ field.name }}" value="{{ phone }}" required class="form-control">
+                                        {% else %}
+                                        {{ field|add_class:'form-control' }}
+                                        {% endif %}
+                                        {% for error in field.errors %}
+                                        <p style="color:rgb(214, 94, 94);float:left;">{{error}}</p>
+                                        {% endfor %}
+                                      </div>
+                                      
+                                    </div>
+                                    {% endfor %}
+                                    <div class="form-group row">
+                                      <div class="col-sm-10 offset-sm-2">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                      
+                            </div>
+
+                        </div>
+                        <!-- end card-body-->
+                    </div>
+                    <!-- end card -->
+
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    2020 © Xeloro.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design &amp; Develop by Myra
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
 {% endblock %}

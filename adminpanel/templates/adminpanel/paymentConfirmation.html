@@ -1,18 +1,43 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h2>Confirm Payment</h2>
-  <div class="payment-details">
-    <p><strong>Subscription:</strong> {{ subscription_type }}</p>
-    <p><strong>Amount:</strong> {{ form.amount }}</p>
-    <p><strong>Expiry Date:</strong> {{ form.expiry_date }}</p>
-    <p><strong>Status:</strong> {{ form.status }}</p>
-    <p><strong>Phone number you provided:</strong> {{ form.profile_phone }}</p>
-    <p><strong>Phone number {{profile}} uses:</strong> {{profile.phone}}</p>
-    <p><strong>Profile of user:</strong> {{profile}}</p>
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+
+      <div class="row" style="justify-content: center; align-items: center;">
+        <div class="col-xl-10">
+          <div class="card">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'images/khalti.jpeg' %}" alt="car-key" class="img-fluid" style="width: 140px; height: 90px;">
+                <h2 class="text-center" style="font-size: 24px; color: #333; margin-bottom: 20px;">Confirm Payment</h2>
+              <div class="payment-details mt-4" style="background-color: #f5f5f5; padding: 20px; border-radius: 5px;">
+                <p style="margin-bottom: 10px;"><strong>Subscription:</strong> {{ subscription_type }}</p>
+                <p style="margin-bottom: 10px;"><strong>Amount:</strong> {{ form.amount }}</p>
+                <p style="margin-bottom: 10px;"><strong>Expiry Date:</strong> {{ formatted_expiry_date }}</p>
+                <p style="margin-bottom: 10px;"><strong>Status:</strong> {{ form.status }}</p>
+                <p style="margin-bottom: 10px;"><strong>Phone number you provided:</strong> {{ form.profile_phone }}</p>
+                <p style="margin-bottom: 10px;"><strong>Phone number {{ profile }} uses:</strong> {{ profile.phone }}</p>
+                <p style="margin-bottom: 10px;"><strong>Profile of user:</strong> {{ profile }}</p>
+              </div>
+
+                <form action="{% url 'confirm_payment' %}" method="POST" class="mt-4">
+                  {% csrf_token %}
+                  <div class="d-flex justify-content-between">
+                    <a href="{% url 'create_payment' %}" class="btn btn-secondary">Go Back</a>
+                    <input type="submit" class="btn btn-primary" value="Confirm">
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<form action="{% url 'confirm_payment' %}" method="POST">
-    {% csrf_token %}
-    <button><a href="{% url 'create_payment' %}">Go Back</a></button>
-    <input type="submit" value="Confirm">
-</form>
+</div>
+
 {% endblock %}

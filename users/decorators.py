@@ -20,7 +20,6 @@ def allowed_users(allowed_roles=[]):
             for index,group in enumerate(groups):
                 if group.name in allowed_roles:
                     return view_func(request,*args,**kwargs)
-
             if(index==len(groups)-1):
                 return HttpResponse("Your are not authorized to view this page")        
 

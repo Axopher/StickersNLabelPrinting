@@ -27,16 +27,29 @@ class Profile(models.Model):
 
 
 class Subscription(models.Model):
-    PLAN_CHOICES = (
-        ('standard', 'Standard Plan'),
-    )
-    plan = models.CharField(max_length=10, choices=PLAN_CHOICES)
+    PLAN_CHOICES = [
+        ('Quarterly', 'Quarterly'),
+        ('Annually', 'Annually'),
+        ('Monthly', 'Monthly'),
+        ('Semi-Annually', 'Semi-Annually'),
+    ]
+
+    plan = models.CharField(max_length=20, choices=PLAN_CHOICES)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return str(self.plan)
 
+    def get_duration(self):
+        if self.plan == 'Quarterly':
+            return timedelta(days=91)
+        elif self.plan == 'Annual':
+            return timedelta(days=366)
+        elif self.plan == 'Monthly':
+            return timedelta(days=31)
+        elif self.plan == 'Semi-Annually':
+            return timedelta(days=183)
 
 class Payment(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

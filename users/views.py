@@ -23,14 +23,14 @@ from django.utils import timezone
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.contrib.auth.forms import PasswordChangeForm
+from .forms import CustomPasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 def home(request):
     context = {        
     }
-    return render(request,"users/home.html",context)
+    return render(request,"home.html",context)
 
 
 @unauthenticated_user
@@ -60,7 +60,11 @@ def loginUser(request):
             login(request,user)
 
             messages.success(request,"User successfully logged in")
-            return redirect('home')
+            print("I am here")
+            for group in request.user.groups.all():
+                if group.name == 'admin':
+                    return redirect('profiles')
+            return redirect('profile')
         else:
             messages.error(request,"Username or password is incorrect")
             print("username or password is incorrect")    
@@ -112,7 +116,6 @@ def registerUser(request):
 @allowed_users(allowed_roles=['registeredUsers'])
 def profile(request):
     user = request.user
-    
 
     try:
         # return utc payment instance
@@ -139,12 +142,17 @@ def profile(request):
                 messages.info(request,"Your subscription is active")
 
     except Payment.DoesNotExist:
-        messages.info(request,"No payment information found. Please make a payment to use of software")
+        messages.info(request,"No payment information found. Please make a payment to use the software")
 
     groups = Group.objects.filter(user=user)
     group_values = [group.name for group in groups]
-    context ={
-        'groups':group_values
+
+
+    payment_details = Payment.objects.filter(profile__user=user)
+    
+    context = {
+        'groups':group_values,
+        'payment_details':payment_details,
     }
     return render(request,"users/users_page.html",context)
 
@@ -160,15 +168,24 @@ def logoutUser(request):
     messages.success(request,"User was successfully logged out")
     return redirect("login")    
 
+def plan(request):
+    plans = Subscription.objects.all()
+    context = {
+        'plans':plans
+    }
+    return render(request,"users/payment_plan.html",context)
+
 
 @login_required(login_url="login")
 @allowed_users(allowed_roles=['registeredUsers'])
-def api_request(request):
+def api_request(request,pk):
+    print(pk)
     print(request.user)
+
     user = request.user
     # fetching user profile and subscription plan
     profile = Profile.objects.get(user=user)
-    subscription_plan=Subscription.objects.get(plan="standard")
+    subscription_plan=Subscription.objects.get(id=pk)
     # setting user details and subscription details
     username=profile.username
     email=profile.email 
@@ -243,7 +260,7 @@ def processOrder(request):
     # user details and subscription details
     profile = request.user.profile
     user = request.user
-    subscription_plan=Subscription.objects.get(plan="standard")
+    
 
     # payment details
     pidx = request.GET['pidx']
@@ -252,6 +269,10 @@ def processOrder(request):
     mobile = request.GET['mobile']
     purchase_order_id = request.GET['purchase_order_id']
     purchase_order_name = request.GET['purchase_order_name']
+
+
+    subscription_plan=Subscription.objects.get(id=purchase_order_id)
+    duration = subscription_plan.get_duration()
 
     # payment verification look up
     url = "https://a.khalti.com/api/v2/epayment/lookup/"
@@ -308,7 +329,7 @@ def processOrder(request):
                     profile=profile,
                     subscription=subscription_plan,
                     amount=amount,
-                    expiry_date=latest_payment.expiry_date + timedelta(days=366),
+                    expiry_date=latest_payment.expiry_date + duration,
                     txnId = txnId,
                     status = "active"
                 )
@@ -318,7 +339,7 @@ def processOrder(request):
                     profile=profile,
                     subscription=subscription_plan,
                     amount=amount,
-                    expiry_date=generate_current_datetime() + timedelta(days=366),
+                    expiry_date=generate_current_datetime() + duration,
                     txnId = txnId,
                     status = "active"
                 )
@@ -328,7 +349,7 @@ def processOrder(request):
                 profile=profile,
                 subscription=subscription_plan,
                 amount=amount,
-                expiry_date=generate_current_datetime() + timedelta(days=366),
+                expiry_date=generate_current_datetime() + duration,
                 txnId = txnId,
                 status = "active"
             )
@@ -345,11 +366,11 @@ def processOrder(request):
 @login_required(login_url="login")
 def changePassword(request):
     print("password change")
-    form = PasswordChangeForm(request.user)
+    form = CustomPasswordChangeForm(request.user)
     if request.method == 'POST':
 
         print("changing password here ")
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
 
         if(form.is_valid()):
             user = form.save()
