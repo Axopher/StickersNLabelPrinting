@@ -10,6 +10,6 @@ urlpatterns = [
     path('api_request/<str:pk>/',views.api_request,name='api_request'),
     path('process_order/',views.processOrder,name='process_order'),
     path('change_password/',views.changePassword,name='change_password'),
-    path('payment_plan/',views.plan,name='payment_plan'),                   
+    # path('pricing_plan/',views.pricingPlan,name='pricing_plan'),                   
 
 ]

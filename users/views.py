@@ -28,7 +28,9 @@ from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 def home(request):
-    context = {        
+    plans = Subscription.objects.all()
+    context = {
+        'plans':plans
     }
     return render(request,"home.html",context)
 
@@ -52,7 +54,8 @@ def loginUser(request):
             user = User.objects.get(username=username) 
         except:
             messages.error(request,"Username or password does not exist")
-            print("username does not exist")
+            return render(request, "users/login_register.html", context)
+
 
         user  =  authenticate(request,username=username,password=password)
 
@@ -67,7 +70,8 @@ def loginUser(request):
             return redirect('profile')
         else:
             messages.error(request,"Username or password is incorrect")
-            print("username or password is incorrect")    
+            return render(request, "users/login_register.html", context)
+
 
     return render(request,"users/login_register.html",context)
 
@@ -116,33 +120,35 @@ def registerUser(request):
 @allowed_users(allowed_roles=['registeredUsers'])
 def profile(request):
     user = request.user
-
+    extend_subscription_button = False 
+    plans = Subscription.objects.all()
     try:
         # return utc payment instance
         latest_payment = Payment.objects.filter(profile__user=user).latest('expiry_date')
         # converting into my timezone
         latest_payment_date = timezone.localtime(latest_payment.expiry_date).replace(tzinfo=None)
-
-        print("profile page")
-        print(latest_payment_date)
-        print(generate_current_datetime())
-
+          
         # Check if the payment has expired
         if latest_payment_date < generate_current_datetime():
             messages.warning(request,"Please renew your payment as it has already expired.")
         else:
             # Calculate the difference between the payment expiry date and current time
             time_difference = latest_payment_date - generate_current_datetime()
-            days_left = time_difference.days
             # Check if the payment is about to expire (within one month)
+            days_left = time_difference.days
+
             if time_difference <= timedelta(days=30):
-                message = f"Your subscription is going to expire in {days_left} days."
-                messages.warning(request, message)
-            else:
-                messages.info(request,"Your subscription is active")
+                if days_left > 1:
+                    message = f"Your subscription is going to expire in {days_left} days."
+                elif days_left <= 1:
+                    message = "Your subscription is going to expire soon."
+
+                extend_subscription_button = True
+                messages.warning(request, message)     
+  
 
     except Payment.DoesNotExist:
-        messages.info(request,"No payment information found. Please make a payment to use the software")
+        messages.info(request,"Please make a payment to use our service")
 
     groups = Group.objects.filter(user=user)
     group_values = [group.name for group in groups]
@@ -153,6 +159,8 @@ def profile(request):
     context = {
         'groups':group_values,
         'payment_details':payment_details,
+        'extend_subscription_button': extend_subscription_button,
+        'plans':plans,
     }
     return render(request,"users/users_page.html",context)
 
@@ -168,12 +176,12 @@ def logoutUser(request):
     messages.success(request,"User was successfully logged out")
     return redirect("login")    
 
-def plan(request):
-    plans = Subscription.objects.all()
-    context = {
-        'plans':plans
-    }
-    return render(request,"users/payment_plan.html",context)
+# def pricingPlan(request):
+#     plans = Subscription.objects.all()
+#     context = {
+#         'plans':plans
+#     }
+#     return render(request,"pricing_plan.html",context)
 
 
 @login_required(login_url="login")
@@ -375,7 +383,7 @@ def changePassword(request):
         if(form.is_valid()):
             user = form.save()
             update_session_auth_hash(request, user)  # Update session
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, 'Password was successfully updated!! Please log in again')
             logout(request)  # Log out the user
             return redirect('login')
     

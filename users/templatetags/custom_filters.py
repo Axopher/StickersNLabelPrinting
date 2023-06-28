@@ -10,3 +10,4 @@ def get_subscription_by_name(queryset, name):
 @register.filter
 def get_subscription_duration(subscription):
     return subscription.get_duration()
+    

@@ -109,7 +109,12 @@
                                                     <td>{{payment.amount}}</td>
                                                     <td>{{payment.payment_date.date}}</td>
                                                     <td>{{payment.expiry_date|date:"F j, Y"}}</td>
-                                                    <td>{{payment.status}}</td>
+                                                    <td>{% if payment.status == 'active' %}
+                                                        <span class="badge badge-soft-success">{{payment.status}}</span>
+                                                        {% else %}
+                                                        <span class="badge badge-soft-dark">{{payment.status}}</span>
+                                                        {% endif %}
+                                                    </td>
                                                     <td><a href="{% url 'profile' payment.profile %}">view</a></td>
                                                     <td><a href="{% url 'update_payment' payment.id %}">update</a></td>
                                                 </tr>

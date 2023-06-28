@@ -30,11 +30,10 @@ class Subscription(models.Model):
     PLAN_CHOICES = [
         ('Quarterly', 'Quarterly'),
         ('Annually', 'Annually'),
-        ('Monthly', 'Monthly'),
-        ('Semi-Annually', 'Semi-Annually'),
     ]
 
     plan = models.CharField(max_length=20, choices=PLAN_CHOICES)
+    name = models.CharField(max_length=20,null=True,blank=True)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
@@ -46,10 +45,6 @@ class Subscription(models.Model):
             return timedelta(days=91)
         elif self.plan == 'Annual':
             return timedelta(days=366)
-        elif self.plan == 'Monthly':
-            return timedelta(days=31)
-        elif self.plan == 'Semi-Annually':
-            return timedelta(days=183)
 
 class Payment(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

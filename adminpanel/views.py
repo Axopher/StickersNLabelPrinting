@@ -22,7 +22,6 @@ from datetime import timedelta
 from users.utils import generate_current_datetime
 
 from django.db.models import OuterRef, Subquery
-
 # Create your views here.
 
 
@@ -53,6 +52,7 @@ def registeredUsers(request):
 @allowed_users(allowed_roles=['admin'])
 def profiles(request):
     payments = Payment.objects.all()
+
 
     paymentFilter = PaymentFilter(request.GET,queryset=payments)
     payments = paymentFilter.qs

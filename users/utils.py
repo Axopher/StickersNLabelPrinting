@@ -36,6 +36,15 @@ def remove_expired_users_from_group(user):
         print("No matching Payment instance found for the user.",user)
         group_values = user.groups.values_list('name', flat=True)
         print(group_values)
+        payments = Payment.objects.all()
+        for payment in payments:
+            expiry_date = timezone.localtime(payment.expiry_date).replace(tzinfo=None)
+            if expiry_date < generate_current_datetime():
+                payment.status = 'expired'
+            else:
+                payment.status = 'active'
+                
+            payment.save()     
 
         # returning the latest payment for the associated users in the payment table
         # latest_payments = Payment.objects.values('profile__user__username').annotate(expiry_date=Max('expiry_date'))

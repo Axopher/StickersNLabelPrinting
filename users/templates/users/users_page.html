@@ -8,9 +8,9 @@
                 <div class="col-lg-9">
                     <div class="card">
                         <div class="card-body">
-
+                            {% if payment_details %}
                             <h2 class="card-title">Subscription Details</h2>
-    
+                            
                             <div class="table-responsive">
                                 <table class="table table-centered table-striped table-nowrap mb-0">
                                     <thead>
@@ -49,7 +49,14 @@
                                     </tbody>
                                 </table>
                             </div>
-    
+                            {% else %}
+                            <div class="alert alert-success mb-0" role="alert">
+                                <h5 class="alert-heading">Welcome, {{request.user}}!!!</h5>
+                                <p>Aww yeah, you are now part of us.</p>
+                                <hr>
+                                <p class="mb-0">To use our software, you need to subscribe to one of our plans</p>
+                            </div>
+                            {% endif %}
                         </div>
                         <!--end card body-->
                         <!--end card body-->
@@ -69,9 +76,6 @@
                                     {% else %}
                                     <p class="card-subtitle mb-4">
                                         <span class="badge badge-dark badge-pill">Inactive</span>
-                                        <br>
-                                        <br>
-                                        <a href="{% url 'payment_plan' %}"><button type="button" class="btn btn-success btn-sm btn-block waves-effect waves-light">Get Subscription</button></a>
                                     </p>
                                     {% endif %}
                                 </div>
@@ -84,9 +88,61 @@
             </div>
 
         </div> <!-- container-fluid -->
+
+        {% if 'subscribers' not in groups or extend_subscription_button %}
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-10">
+    
+                <!-- Plans -->
+                <div class="row mt-sm-5 mt-3 mb-3">
+                    <div class="col-md-4">
+                        <div class="card card-pricing">
+                            <div class="card-body text-center">
+                                <i class="card-pricing-icon mdi mdi-umbrella text-white bg-success"></i>
+                                <h5 class="font-weight-bold mt-4 text-uppercase text-success">{{plans.1.name}}</h5>
+                                <ul class="card-pricing-features">
+                                    <li>{{plans.1.description}}</li>
+                                </ul>
+    
+                                <h2 class="mt-4">NPR. {{plans.1.price}}</h2>
+                                {% if extend_subscription_button %}
+                                <a href="{% url 'api_request' plans.1.id %}"><button class="btn btn-success mt-4 mb-2 btn-rounded">Extend Subscription <i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                {% else %}
+                                <a href="{% url 'api_request' plans.1.id %}"><button class="btn btn-success mt-4 mb-2 btn-rounded">Get Started <i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                {% endif %}
+                                
+                            </div>
+                        </div> <!-- end Pricing_card -->
+                    </div> <!-- end col -->
+    
+                    <div class="col-md-4">
+                        <div class="card card-pricing">
+                            <div class="card-body text-center">
+                                <i class="card-pricing-icon mdi mdi mdi-trophy-award text-white bg-primary"></i>
+                                <h5 class="font-weight-bold mt-4 text-uppercase">{{plans.0.name}}</h5>
+                                <ul class="card-pricing-features">
+                                    <li>{{plans.0.description}}</li>
+                                </ul>
+    
+                                <h2 class="mt-4">NPR. {{plans.0.price}}</h2>
+                                {% if extend_subscription_button %}
+                                <a href="{% url 'api_request' plans.0.id %}"><button class="btn btn-primary mt-4 mb-2 btn-rounded">Extend Subscription<i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                {% else %}
+                                <a href="{% url 'api_request' plans.0.id %}"><button class="btn btn-primary mt-4 mb-2 btn-rounded">Get Started <i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                {% endif %}
+                            </div>
+                        </div> <!-- end Pricing_card -->
+                    </div> <!-- end col -->
+    
+                </div>
+                <!-- end row -->
+    
+            </div> <!-- end col-->
+        </div>
+        {% endif %}
+
     </div>
     <!-- End Page-content -->
-
     <footer class="footer">
         <div class="container-fluid">
             <div class="row">
@@ -101,7 +157,6 @@
             </div>
         </div>
     </footer>
-
 </div>
 
 

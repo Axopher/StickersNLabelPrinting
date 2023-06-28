@@ -26,3 +26,4 @@ def paginateProfiles(request,payments,results):
     custom_range = range(leftIndex,rightIndex)
 
     return custom_range,payments
+

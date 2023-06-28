@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 <div class="main-content">
@@ -13,6 +14,7 @@
                                     <div class="row">
                                         <div class="col-lg-5 d-none d-lg-block bg-register rounded-left">
                                             <!-- image reside here -->
+                                            <!-- <img src="{% static 'images/wall.jpg' %}" alt=""> -->
                                         </div>
                                         <div class="col-lg-7">
                                             <div class="p-5">
@@ -25,11 +27,11 @@
                                                     {% csrf_token %}
 
                                                     <div class="form-group">
-                                                      <label for="entire-sheet-label">
+                                                      <label for="entire-sheet-label" class="custom-radio-label">
                                                         <input type="radio" id="entire-sheet-label" name="label-type" onchange="handleLabelTypeChange()" checked>
                                                         For the entire cells
                                                       </label>
-                                                      <select id="entire-sheet-dropdown" name="entire-sheet-dropdown" class="form-control">
+                                                      <select id="entire-sheet-dropdown" name="entire-sheet-dropdown" class="form-control" data-toggle="select2">
                                                         <optgroup label="choose labels">
                                                           {% for option in options %}
                                                           <option value="{{option}}">{{ option }}</option>
@@ -39,11 +41,11 @@
                                                     </div>
                                                   
                                                     <div class="form-group">
-                                                      <label for="rows-columns-label">
+                                                      <label for="rows-columns-label" class="custom-radio-label">
                                                         <input type="radio" id="rows-columns-label" name="label-type" onchange="handleLabelTypeChange()">
                                                         For a specific cell
                                                       </label>
-                                                      <select id="selectedLabel" name="selectedLabel" onchange="handleLabelTypeChange()" disabled class="form-control">
+                                                      <select id="selectedLabel" name="selectedLabel" onchange="handleLabelTypeChange()" disabled class="form-control" data-toggle="select2">
                                                         <optgroup label="choose labels">
                                                           {% for option in options %}
                                                           <option value="{{option}}">{{ option }}</option>
@@ -51,9 +53,9 @@
                                                         </optgroup>
                                                       </select>
                                                       <label>row number:</label>
-                                                      <select id="rows-dropdown" name="rows-dropdown" disabled class="form-control"></select>
+                                                      <select id="rows-dropdown" name="rows-dropdown" disabled class="form-control" data-toggle="select2"></select>
                                                       <label>column number:</label>
-                                                      <select id="columns-dropdown" name="columns-dropdown" disabled class="form-control"></select>
+                                                      <select id="columns-dropdown" name="columns-dropdown" disabled class="form-control" data-toggle="select2"></select>
                                                     </div>
                                                     <div class="form-group">
                                                       <label for="formFile" class="form-label">Upload CSV File:</label>
@@ -99,4 +101,46 @@
     </footer>
 
 </div>
+
+<style>
+  .custom-radio-label {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #132843;
+    font-weight: bold;
+  }
+  
+  .radio-button {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #132843;
+    margin-right: 5px;
+  }
+  
+  input[type="radio"]:checked + .radio-button {
+    background-color: #132843;
+  }
+  
+  input[type="radio"]:checked + .radio-button:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  
+  .custom-radio-label:hover .radio-button {
+    border-color: #132843;
+  }
+  
+</style>
+
 {% endblock %}
