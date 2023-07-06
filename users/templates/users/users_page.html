@@ -52,9 +52,9 @@
                             {% else %}
                             <div class="alert alert-success mb-0" role="alert">
                                 <h5 class="alert-heading">Welcome, {{request.user}}!!!</h5>
-                                <p>Aww yeah, you are now part of us.</p>
+                                <p>Please, subscribe or renew any of the following package. You can pay via. Khalti, e-Banking, Mobile Banking, Connect IPS or FonePay QR for the subscription charge.</p>
                                 <hr>
-                                <p class="mb-0">To use our software, you need to subscribe to one of our plans</p>
+                                <p class="mb-0">If any issue, kinldy contact us at +9779864272700.</p>
                             </div>
                             {% endif %}
                         </div>
@@ -108,7 +108,7 @@
                                 {% if extend_subscription_button %}
                                 <a href="{% url 'api_request' plans.1.id %}"><button class="btn btn-success mt-4 mb-2 btn-rounded">Extend Subscription <i class="mdi mdi-arrow-right ml-1"></i></button></a>
                                 {% else %}
-                                <a href="{% url 'api_request' plans.1.id %}"><button class="btn btn-success mt-4 mb-2 btn-rounded">Get Started <i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                <a href="{% url 'api_request' plans.1.id %}"><button class="btn btn-success mt-4 mb-2 btn-rounded">Subscribe for 3 Months <i class="mdi mdi-arrow-right ml-1"></i></button></a>
                                 {% endif %}
                                 
                             </div>
@@ -128,7 +128,7 @@
                                 {% if extend_subscription_button %}
                                 <a href="{% url 'api_request' plans.0.id %}"><button class="btn btn-primary mt-4 mb-2 btn-rounded">Extend Subscription<i class="mdi mdi-arrow-right ml-1"></i></button></a>
                                 {% else %}
-                                <a href="{% url 'api_request' plans.0.id %}"><button class="btn btn-primary mt-4 mb-2 btn-rounded">Get Started <i class="mdi mdi-arrow-right ml-1"></i></button></a>
+                                <a href="{% url 'api_request' plans.0.id %}"><button class="btn btn-primary mt-4 mb-2 btn-rounded">Subscribe for 12 Months <i class="mdi mdi-arrow-right ml-1"></i></button></a>
                                 {% endif %}
                             </div>
                         </div> <!-- end Pricing_card -->
@@ -147,11 +147,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    2020 © Xeloro.
+                    LabelPro @ 2023.
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-right d-none d-sm-block">
-                        Design &amp; Develop by Myra
+                        System by Danfe Solutions
                     </div>
                 </div>
             </div>
