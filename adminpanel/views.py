@@ -116,7 +116,7 @@ def createPayment(request):
                 return render(request,"adminpanel/paymentConfirmation.html",{'form':form_data,'profile':profile,'subscription_type':subscription_type,'formatted_expiry_date':formatted_expiry_date})                
         except Profile.DoesNotExist:
             print("profile does not exist")
-            messages.error(request, 'Profile not found for the provided phone number.')
+            messages.error(request, 'User must be registered first using this phone number.')
 
     context = {'form':form}
     return render(request,"adminpanel/payment_form.html",context)

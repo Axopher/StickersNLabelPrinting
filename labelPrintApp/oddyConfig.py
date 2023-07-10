@@ -131,14 +131,14 @@ label_data={
         'ver_cell_gap':0,
     },
     24: {
-        'top_bottom_margin': 12.979,
-        'left_right_margin': 4.597,
+        'top_bottom_margin': 12,
+        'left_right_margin': 6,
         'cell_height': 34,
         'cell_width': 64,
         'rows': 8,
         'columns': 3,
-        'hor_cell_gap':0,
-        'ver_cell_gap':0,
+        'hor_cell_gap':3,
+        'ver_cell_gap':1/7,
     },
     30: {
         'top_bottom_margin': 2.499,
