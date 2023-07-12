@@ -18,7 +18,6 @@ class CustomUserCreationForm(UserCreationForm):
                 'class': 'form-control',
                 'type': 'text',
                 'name': 'phone',
-                'placeholder': 'phone..',
                 'pattern': r'9[78][0-9]{8}',
                 'title': 'Phone number should start with 9, second digit should be 7 or 8, and the remaining digits should be any digit from 0 to 9'
             }

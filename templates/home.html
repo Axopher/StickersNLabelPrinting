@@ -1,13 +1,10 @@
 {% extends 'quitox/base.html' %}
 {% load static %}
 {% block content %}
-
 <main>
-
    <div class="tp-header-bg">
       <img src="{% static 'quitox/assets/img/hero/hero-bg-2.png' %}" alt="">
    </div>
-
    <!-- tp-slider-area-start -->
    <div class="tp-hero__area tp-hero__bg-2">
       <div class="container">
@@ -41,7 +38,7 @@
    <!-- tp-slider-area-end -->
 
    <!-- tp-feature-area-start -->
-   <div class="tp-feature__area pt-120 pb-120">
+   <div id="work_how" class="tp-feature__area pt-120 pb-120" style="margin-top: 6rem;">
       <div class="container">
          <div class="row">
             <div class="col-12">
@@ -61,15 +58,7 @@
                      <h4 class="tp-feature__title-sm">Subscribe</h4>
                      <p>Subscribe this <strong>LabelPro</strong> Software either for 3 months or 12 months.</p>
                   </div>
-                  <div class="tp-feature__link pt-50">
-                     <a href="#">
-                        <svg width="39" height="16" viewBox="0 0 39 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <path
-                              d="M38.7071 8.70711C39.0976 8.31658 39.0976 7.68342 38.7071 7.29289L32.3431 0.928932C31.9526 0.538408 31.3195 0.538408 30.9289 0.928932C30.5384 1.31946 30.5384 1.95262 30.9289 2.34315L36.5858 8L30.9289 13.6569C30.5384 14.0474 30.5384 14.6805 30.9289 15.0711C31.3195 15.4616 31.9526 15.4616 32.3431 15.0711L38.7071 8.70711ZM0 9H38V7H0V9Z"
-                              fill="currentColor" />
-                        </svg>
-                     </a>
-                  </div>
+
                </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-6 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
@@ -81,15 +70,7 @@
                      <h4 class="tp-feature__title-sm">Excel Data Sheet</h4>
                      <p>Store all your label data info in excel sheet as per the defined format. </p>
                   </div>
-                  <div class="tp-feature__link pt-50">
-                     <a href="#">
-                        <svg width="39" height="16" viewBox="0 0 39 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <path
-                              d="M38.7071 8.70711C39.0976 8.31658 39.0976 7.68342 38.7071 7.29289L32.3431 0.928932C31.9526 0.538408 31.3195 0.538408 30.9289 0.928932C30.5384 1.31946 30.5384 1.95262 30.9289 2.34315L36.5858 8L30.9289 13.6569C30.5384 14.0474 30.5384 14.6805 30.9289 15.0711C31.3195 15.4616 31.9526 15.4616 32.3431 15.0711L38.7071 8.70711ZM0 9H38V7H0V9Z"
-                              fill="currentColor" />
-                        </svg>
-                     </a>
-                  </div>
+
                </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-6 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".9s">
@@ -101,15 +82,7 @@
                      <h4 class="tp-feature__title-sm">Print & Stick</h4>
                      <p>Generate label sticker in A4 Size and then print using normal printer.</p>
                   </div>
-                  <div class="tp-feature__link pt-50">
-                     <a href="#">
-                        <svg width="39" height="16" viewBox="0 0 39 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <path
-                              d="M38.7071 8.70711C39.0976 8.31658 39.0976 7.68342 38.7071 7.29289L32.3431 0.928932C31.9526 0.538408 31.3195 0.538408 30.9289 0.928932C30.5384 1.31946 30.5384 1.95262 30.9289 2.34315L36.5858 8L30.9289 13.6569C30.5384 14.0474 30.5384 14.6805 30.9289 15.0711C31.3195 15.4616 31.9526 15.4616 32.3431 15.0711L38.7071 8.70711ZM0 9H38V7H0V9Z"
-                              fill="currentColor" />
-                        </svg>
-                     </a>
-                  </div>
+
                </div>
             </div>
          </div>
@@ -143,10 +116,97 @@
    {% include 'pricing_plan.html' %}
    <!-- tp-price-area-end -->
 
-
-
-
-
+   <div id="contact" class="tp-conatact-area" style="margin-bottom: 2rem;">
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-lg-6 col-10">
+            <div class="tp-price__section text-center pb-60 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".3s" style="visibility: visible; animation-duration: 0.9s; animation-delay: 0.3s; animation-name: tpfadeUp;">
+               <h3 class="tp-section-title-sm pb-20">Contact Us</h3>
+               <span>Now QR based professional label printing cost below 10 paisa.</span>
+            </div>
+            </div>
+      </div>
+         <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                  <h4>Visit Us Daily</h4>
+                  <span>
+                     <a href="https://www.google.com.bd/maps/@23.74591,90.3701368,15z" target="_blank">Bowery St, New York, <br> NY 10013,USA</a>
+                  </span>
+               </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-phone-volume"></i></span>
+                  <h4>Contact Us</h4>
+                  <span>
+                     <a href="tel:1255568652">+1255 - 568 - 6523 <br>
+                        +1299 - 525 - 6500</a>
+                  </span>
+               </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                  <h4>Email Us</h4>
+                  <span><a href="mailto:Sotcoxinfo@example.com">Sotcoxinfo@example.com</a><br>
+                     <a href="mailto:Webyourinfo@gmail.com">Webyourinfo@gmail.com</a></span>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-xl-12">
+               <div id="contact" class="contact-form-box pt-60">
+                  <div class="contact-form-box text-center">
+                     <div class="row justify-content-center">
+                        <div class="col-8">
+                           <h4 class="contact-title">Send us a Message :</h4>
+                        </div>
+                     </div>
+                     <form action="{% url 'contact' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="text" placeholder="Enter your Name" required name="name" pattern="[A-Za-z ]{5,}" title="Please enter a valid username">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="email" placeholder="Enter your Email" required name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="tel" placeholder="Enter your Number" required name="number" pattern="[9][7-8][0-9]{8}" title="Please enter a valid phone number">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="text" placeholder="Subject" required name="subject" pattern="[A-Za-z0-9]{6,}" title="It should be at least 6 characters long">
+                              </div>
+                           </div>
+                           <div class="col-12">
+                              <div class="tp-contact-input">
+                                 <textarea placeholder="Type your Message" required name="message" pattern=".{16,}" title="It should be at least 16 characters long"></textarea>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-12">
+                              <div class="tp-submit-button">
+                                 <button type="submit" class="tp-btn-blue-square"><span>Send Message</span></button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </main>
 
 {% endblock %}

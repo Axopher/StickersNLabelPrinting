@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 from django.http import HttpResponseRedirect
 
-from .models import Profile,Subscription,Payment
+from .models import Profile,Subscription,Payment,Contact
 
 from .utils import remove_expired_users_from_group
 from .signals import createProfile,createSettings
@@ -110,8 +110,6 @@ def registerUser(request):
            group = Group.objects.get(name='registeredUsers') 
            user.groups.add(group)
 
-           messages.success(request,"cheers "+user.username+"!!! Your account was successfully created.")
-
            login(request,user)
            return redirect('profile')  
     
@@ -183,12 +181,25 @@ def logoutUser(request):
     messages.success(request,"User was successfully logged out")
     return redirect("login")    
 
-# def pricingPlan(request):
-#     plans = Subscription.objects.all()
-#     context = {
-#         'plans':plans
-#     }
-#     return render(request,"pricing_plan.html",context)
+
+def contact_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        number = request.POST.get('number')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        if name and email and number and subject and message :
+            # Save the form data to the Contact model
+            contact = Contact(name=name, email=email, number=number, subject=subject, message=message)
+            contact.save()
+            # Return a success response
+            messages.success(request, 'Thank you for reaching to us. Your message will be responded shortly!!')
+            return redirect("home")
+
+
+    return render(request, 'home.html')
 
 
 @login_required(login_url="login")
@@ -388,13 +399,14 @@ def changePassword(request):
             return redirect('login')
     
     context = {
-        'form':form
+        'form':form,
     }
     return render(request,"changePassword.html",context)
 
 
 #forgot Password Link
 def forgot_password(request):
+    page = "forgot_password"
     if request.method == 'POST':
         email = request.POST['email']
         
@@ -412,7 +424,7 @@ def forgot_password(request):
         else:
             messages.error(request, 'Account does not exist')
             return redirect('forgot_password')
-    return render(request, 'users/forgot_password.html')
+    return render(request, 'users/forgot_password.html',{'page':page})
 
 
 def reset_password_validate(request, uidb64, token):
@@ -433,6 +445,7 @@ def reset_password_validate(request, uidb64, token):
 
 
 def reset_password(request):
+    page = "forgot_password"
     if request.method == 'POST':
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
@@ -448,4 +461,4 @@ def reset_password(request):
         else:
             messages.error(request, 'Password do not match!')
             return redirect('reset_password')
-    return render(request, 'users/reset_password.html')    
+    return render(request, 'users/reset_password.html',{'page':page})    
