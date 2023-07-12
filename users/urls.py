@@ -10,6 +10,9 @@ urlpatterns = [
     path('api_request/<str:pk>/',views.api_request,name='api_request'),
     path('process_order/',views.processOrder,name='process_order'),
     path('change_password/',views.changePassword,name='change_password'),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('reset_password/', views.reset_password, name='reset_password'),
+    path('reset_password_validate/<uidb64>/<token>/', views.reset_password_validate, name='reset_password_validate'),
     # path('pricing_plan/',views.pricingPlan,name='pricing_plan'),                   
 
 ]

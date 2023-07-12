@@ -25,7 +25,7 @@
              <div class="col-xl-2 col-lg-2 col-md-6 col-6">
                 <div class="tp-header__logo">
                    <a href="#">
-                      <img src="{% static 'quitox/assets/img/logo/logo-black.png' %}" alt="">
+                      <!-- <img src="{% static 'quitox/assets/img/logo/logo-black.png' %}" alt=""> -->
                    </a>
                 </div>
              </div>
@@ -33,10 +33,6 @@
                 <div class="tp-header__main-menu tp-header__black-menu">
                    <nav id="mobile-menu">
                       <ul>
-                         <li><a href="{% url 'home' %}">Home</a></li>
-                         <li><a href="#">How it Works?</a></li>
-                         <li><a href="#">Pricing</a></li>
-                         <li><a href="#">Contact Us</a></li>
                          {% for group in user.groups.all %}
                            {% if group.name == 'admin'%}
                               <li><a href="{% url 'profiles' %}">Dashboard</a></li>

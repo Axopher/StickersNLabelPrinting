@@ -17,7 +17,7 @@ from .models import Profile,Subscription,Payment
 from .utils import remove_expired_users_from_group
 from .signals import createProfile,createSettings
 
-from .utils import generate_current_datetime
+from .utils import generate_current_datetime, send_verification_email
 from datetime import timedelta
 from django.utils import timezone
 
@@ -25,6 +25,15 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import CustomPasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+
+
+from decouple import config
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_decode
+
+
+
 
 # Create your views here.
 def home(request):
@@ -63,7 +72,6 @@ def loginUser(request):
             login(request,user)
 
             messages.success(request,"User successfully logged in")
-            print("I am here")
             for group in request.user.groups.all():
                 if group.name == 'admin':
                     return redirect('profiles')
@@ -94,7 +102,6 @@ def registerUser(request):
            user = form.save(commit=False)
            user.username = user.username.lower() 
            user.save() 
-           print("signal calls...") 
            phone = form.cleaned_data.get('phone')
            
            createProfile(sender=User, instance=user, created=True, phone=phone) 
@@ -187,9 +194,6 @@ def logoutUser(request):
 @login_required(login_url="login")
 @allowed_users(allowed_roles=['registeredUsers'])
 def api_request(request,pk):
-    print(pk)
-    print(request.user)
-
     user = request.user
     # fetching user profile and subscription plan
     profile = Profile.objects.get(user=user)
@@ -201,13 +205,14 @@ def api_request(request,pk):
     subscription_plan_type=subscription_plan.plan
     subscription_plan_price=float(subscription_plan.price)
 
-    print(subscription_plan_price)
     # api call
     url = "https://a.khalti.com/api/v2/epayment/initiate/"
     
+    api_key = config('KHALTI_API_KEY')
+
     headers = {
         "Content-Type":"application/json",
-        "Authorization": "Key 84a068d414ff4a189e1dbae85a09c9a3" 
+        "Authorization": f"Key {api_key}" 
     }
 
     payload = {
@@ -238,7 +243,6 @@ def api_request(request,pk):
     context={
         'response':response
     }
-    print(response)
     try:
         if "payment_url" in response:
             payment_url = response['payment_url']
@@ -248,7 +252,6 @@ def api_request(request,pk):
         else:
             return render(request, 'users/error.html', context)
     except Exception as e:
-        print("exception")
         # Handle the exception
         exception_type = type(e).__name__  # Get the name of the exception type
         exception_message = str(e)  # Get the error message of the exception
@@ -282,6 +285,7 @@ def processOrder(request):
     subscription_plan=Subscription.objects.get(id=purchase_order_id)
     duration = subscription_plan.get_duration()
 
+    api_key = config('KHALTI_API_KEY')
     # payment verification look up
     url = "https://a.khalti.com/api/v2/epayment/lookup/"
     request_data = {
@@ -290,11 +294,10 @@ def processOrder(request):
 
     headers = {
             'Content-Type': 'application/json',
-            "Authorization": "key 84a068d414ff4a189e1dbae85a09c9a3", 
+            "Authorization": f"Key {api_key}", 
     }
 
     response = requests.post(url, json=request_data,headers=headers)
-    print("here")
     response=response.json()
 
     # Get the payment status from the response
@@ -316,7 +319,6 @@ def processOrder(request):
         'payment_message': payment_message
     }
 
-    print(response['status'])
     if(response['status']=='Completed'):
         group_values = [group.name for group in user.groups.all()]
         amount = subscription_plan.price
@@ -373,11 +375,9 @@ def processOrder(request):
 
 @login_required(login_url="login")
 def changePassword(request):
-    print("password change")
     form = CustomPasswordChangeForm(request.user)
     if request.method == 'POST':
 
-        print("changing password here ")
         form = CustomPasswordChangeForm(request.user, request.POST)
 
         if(form.is_valid()):
@@ -391,3 +391,61 @@ def changePassword(request):
         'form':form
     }
     return render(request,"changePassword.html",context)
+
+
+#forgot Password Link
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        
+        if Profile.objects.filter(email=email).exists():
+            user_profile = Profile.objects.get(email=email)
+            user = user_profile.user
+
+            # send reset password email
+            mail_subject = 'Reset Your Password'
+            email_template = 'users/reset_password_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
+
+            messages.success(request, 'Password reset link has been sent to your email address.')
+            return redirect('login')
+        else:
+            messages.error(request, 'Account does not exist')
+            return redirect('forgot_password')
+    return render(request, 'users/forgot_password.html')
+
+
+def reset_password_validate(request, uidb64, token):
+    # validate the user by decoding the token and user pk
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        request.session['uid'] = uid
+        messages.info(request, 'Please reset your password')
+        return redirect('reset_password')
+    else:
+        messages.error(request, 'This link has been expired!')
+        return redirect('login')
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        if password == confirm_password:
+            pk = request.session.get('uid')
+            user = User.objects.get(pk=pk)
+            user.set_password(password)
+            user.is_active = True
+            user.save()
+            messages.success(request, 'Password reset successful')
+            return redirect('login')
+        else:
+            messages.error(request, 'Password do not match!')
+            return redirect('reset_password')
+    return render(request, 'users/reset_password.html')    

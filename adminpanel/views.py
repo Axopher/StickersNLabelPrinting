@@ -115,7 +115,6 @@ def createPayment(request):
                                      
                 return render(request,"adminpanel/paymentConfirmation.html",{'form':form_data,'profile':profile,'subscription_type':subscription_type,'formatted_expiry_date':formatted_expiry_date})                
         except Profile.DoesNotExist:
-            print("profile does not exist")
             messages.error(request, 'User must be registered first using this phone number.')
 
     context = {'form':form}
@@ -134,18 +133,12 @@ def confirmPayment(request):
         status = form_data['status']
         phone = form_data['profile_phone']
         TxnId = form_data['TxnId']
-        print("inside confirm payment")
-        print(TxnId)
         expiry_datetime = datetime.strptime(expiry_date, '%Y-%m-%dT%H:%M')
-        print(expiry_datetime)
         try:
             # Get the profile and subscription
-            print("profile")
             profile = Profile.objects.get(phone=phone)
-            print(profile)
             
             latest_payment = Payment.objects.filter(profile=profile).order_by('-expiry_date').first()
-            print("latest payment",latest_payment)
             
             
             if not latest_payment:
@@ -155,7 +148,6 @@ def confirmPayment(request):
             else:
                 latest_payment_date = timezone.localtime(latest_payment.expiry_date).replace(tzinfo=None)
                 if latest_payment_date > generate_current_datetime():
-                    print("when payment exists and has not expired")
                     
 
                     if expiry_datetime < latest_payment_date:
@@ -189,8 +181,6 @@ def confirmPayment(request):
 
             # Clear the payment_form_data from the session
             del request.session['payment_form_data']
-            print("payment session deleted")
-            print(payment)
             messages.success(request,"Payment created successfully.")
             return redirect("profiles")
 
@@ -207,10 +197,8 @@ def updatePayment(request,pk):
     payment = Payment.objects.get(id=pk)
     phone = payment.profile.phone
     form = PaymentForm(instance=payment)
-    print("Update payment")
     payment.expiry_date = timezone.localtime(payment.expiry_date).replace(tzinfo=None)
     if request.method == "POST":
-        print("inside this")
         form = PaymentForm(request.POST,instance=payment)
         if form.is_valid():
             profile = Profile.objects.get(phone=phone)

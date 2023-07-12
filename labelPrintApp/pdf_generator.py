@@ -73,12 +73,10 @@ def process_uploaded_file(request, uploaded_file):
         return process_specific_cell(request, pdf, left_right_margin, label_info, data, row_num, column_num)
 
 def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin, label_info, data):
-    print("for entire sheet")
     # Generate the PDF with entire sheet data
     label_settings = LabelConfig.objects.get(user=request.user)
 
     
-    print("first phases")
     # Initializing label data
     cell_width = label_info['cell_width']
     cell_height = label_info['cell_height']
@@ -101,12 +99,10 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
             for col in range(columns):
                 data_list=data[row * columns + col]
                 datum=data_list.pop()
-                print(datum)
                 # Outer cell frame maker
                 pdf.cell(cell_width, cell_height, '', border=0)
 
                 if(datum.startswith("http")):
-                    print("img")
                     # Fetch the image from the web
                     image_url = ""+datum+""
                     try:                           
@@ -121,15 +117,12 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
                         with open(qr_img_path, 'wb') as f:
                                 f.write(image_data)
                     except ValueError as e:
-                        print(e)
                         messages.error(request, "Invalid image format. We only accept jpeg, jpg and png format.")
                         return redirect("sticker_form")    
                     except Exception as e:
-                        print(e)
                         messages.error(request,"Invalid image url")
                         return redirect("sticker_form")
                 else:
-                    print("qr")
                     # Generate QR code
                     qr = qrcode.QRCode()
                     qr.add_data(datum)
@@ -163,8 +156,6 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
                     style = getattr(label_settings, "emphasis_line" + str(i + 1))
                     text_size = getattr(label_settings, "text_size_line" + str(i + 1))
 
-                    print("printing text color")
-                    print(text_color) 
 
                     r,g,b = hex_to_rgb(text_color)
 
@@ -201,10 +192,8 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
 
         # Check if the file exists
         if os.path.exists(pdf_path):
-            print("PDF file was created successfully.")
             return render(request,'labelPrintApp/result.html',{'message':'success'})
         else:
-            print("Failed to create the PDF file.")
             return render(request,'labelPrintApp/result.html',{'message':'failed'})
     else:
         return render(request,'labelPrintApp/result.html',{'message':'Excluding title row, CSV file no. of rows and no. of cells you want to print did not match'})     
@@ -212,7 +201,6 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
 
 def process_specific_cell(request, pdf, left_right_margin, label_info, data, row_num, column_num):
     # Generate the PDF with specific cell data
-    print("for a specific cell")
 
     # Generate the PDF with entire sheet data
     label_settings = LabelConfig.objects.get(user=request.user)
@@ -257,16 +245,13 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
                             with open(qr_img_path, 'wb') as f:
                                 f.write(image_data)
                         except ValueError as e:
-                            print(e)
                             messages.error(request, "Invalid image format")
                             return redirect("sticker_form")    
                         except Exception as e:
-                            print(e)
                             messages.error(request,"Invalid image url")
                             return redirect("sticker_form")
                     else:
                         # Generate QR code
-                        print("qr")
                         qr = qrcode.QRCode()
                         qr.add_data(datum)
                         qr.make(fit=True)
@@ -297,8 +282,6 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
                         style = getattr(label_settings, "emphasis_line" + str(i + 1))
                         text_size = getattr(label_settings, "text_size_line" + str(i + 1))
 
-                        print("printing text color")
-                        print(text_color) 
 
                         r,g,b = hex_to_rgb(text_color)
 
@@ -338,11 +321,8 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
 
         # Check if the file exists
         if os.path.exists(pdf_path):
-            print("PDF file was created successfully.")
             return render(request,'labelPrintApp/result.html',{'message':'success'})
         else:
-            print("Failed to create the PDF file.")
             return render(request,'labelPrintApp/result.html',{'message':'failed'})
-    else:
-        print("There should be only one row excluding title row")    
+    else: 
         return render(request,'labelPrintApp/result.html',{'message':'There should be only one row excluding title row'})

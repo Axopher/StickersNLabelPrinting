@@ -6,12 +6,11 @@ from .models import Profile
 from labelPrintApp.models import LabelConfig
 from .forms import CustomUserCreationForm
 
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 def createProfile(sender,instance,created, phone=None,**kwargs):
     if created:
-        print("inside signals")
-        print(phone)
         user = instance
         profile = Profile.objects.create(
             user=user,
@@ -19,6 +18,19 @@ def createProfile(sender,instance,created, phone=None,**kwargs):
             email=user.email,
             phone=phone,
         )
+
+        subject = 'Welcome to LabelPro!!!'
+        message = 'We are glad you are here.'
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profile.email], #multiple emails can passed here
+            fail_silently = False
+        )
+
+
 
 def createSettings(sender,instance,created, phone=None,**kwargs):
     if created:

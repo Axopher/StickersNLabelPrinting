@@ -5,8 +5,6 @@ class ExpiredUsersMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        print("custom middleware")
-        print(request.user)
         user = request.user
         
 
