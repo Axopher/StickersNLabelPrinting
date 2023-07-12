@@ -1,13 +1,10 @@
 {% extends 'quitox/base.html' %}
 {% load static %}
 {% block content %}
-
 <main>
-
    <div class="tp-header-bg">
       <img src="{% static 'quitox/assets/img/hero/hero-bg-2.png' %}" alt="">
    </div>
-
    <!-- tp-slider-area-start -->
    <div class="tp-hero__area tp-hero__bg-2">
       <div class="container">
@@ -143,10 +140,98 @@
    {% include 'pricing_plan.html' %}
    <!-- tp-price-area-end -->
 
+   <div class="tp-conatact-area">
+      <div class="container">
 
+         <div class="row justify-content-center">
+            <div class="col-lg-6 col-10">
+            <div class="tp-price__section text-center pb-60 wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".3s" style="visibility: visible; animation-duration: 0.9s; animation-delay: 0.3s; animation-name: tpfadeUp;">
+               <h3 class="tp-section-title-sm pb-20">Contact Us</h3>
+               <span>Now QR based professional label printing cost below 10 paisa.</span>
+            </div>
+            </div>
+      </div>
 
-
-
+         <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                  <h4>Visit Us Daily</h4>
+                  <span>
+                     <a href="https://www.google.com.bd/maps/@23.74591,90.3701368,15z" target="_blank">Bowery St, New York, <br> NY 10013,USA</a>
+                  </span>
+               </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-phone-volume"></i></span>
+                  <h4>Contact Us</h4>
+                  <span>
+                     <a href="tel:1255568652">+1255 - 568 - 6523 <br>
+                        +1299 - 525 - 6500</a>
+                  </span>
+               </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
+               <div class="contact-info text-center">
+                  <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                  <h4>Email Us</h4>
+                  <span><a href="mailto:Sotcoxinfo@example.com">Sotcoxinfo@example.com</a><br>
+                     <a href="mailto:Webyourinfo@gmail.com">Webyourinfo@gmail.com</a></span>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-xl-12">
+               <div id="contact" class="contact-form-box pt-60">
+                  <div class="contact-form-box text-center">
+                     <div class="row justify-content-center">
+                        <div class="col-8">
+                           <h4 class="contact-title">Send us a Message :</h4>
+                        </div>
+                     </div>
+                     <form action="#">
+                        <div class="row">
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="text" placeholder="Enter your Name">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="email" placeholder="Enter your Mail">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="text" placeholder="Enter your Number">
+                              </div>
+                           </div>
+                           <div class="col-lg-6 col-md-6 col-12">
+                              <div class="tp-contact-input">
+                                 <input type="text" placeholder="Subject">
+                              </div>
+                           </div>
+                           <div class="col-12">
+                              <div class="tp-contact-input">
+                                 <textarea placeholder="Type your Message"></textarea>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-12">
+                              <div class="tp-submit-button">
+                                 <button type="submit" class="tp-btn-blue-square"><span>Send Message</span></button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </main>
 
 {% endblock %}
