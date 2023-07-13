@@ -29,7 +29,7 @@
                                                     <div class="form-group">
                                                       <label for="entire-sheet-label" class="custom-radio-label">
                                                         <input type="radio" id="entire-sheet-label" name="label-type" onchange="handleLabelTypeChange()" checked>
-                                                        For the entire cells
+                                                        For The Entire Cells
                                                       </label>
                                                       <select id="entire-sheet-dropdown" name="entire-sheet-dropdown" class="form-control" data-toggle="select2">
                                                         <optgroup label="choose labels">
@@ -43,7 +43,7 @@
                                                     <div class="form-group">
                                                       <label for="rows-columns-label" class="custom-radio-label">
                                                         <input type="radio" id="rows-columns-label" name="label-type" onchange="handleLabelTypeChange()">
-                                                        For a specific cell
+                                                        For The Specific Cells
                                                       </label>
                                                       <select id="selectedLabel" name="selectedLabel" onchange="handleLabelTypeChange()" disabled class="form-control" data-toggle="select2">
                                                         <optgroup label="choose labels">
@@ -52,10 +52,10 @@
                                                           {% endfor %}
                                                         </optgroup>
                                                       </select>
-                                                      <label>row number:</label>
-                                                      <select id="rows-dropdown" name="rows-dropdown" disabled class="form-control" data-toggle="select2"></select>
-                                                      <label>column number:</label>
-                                                      <select id="columns-dropdown" name="columns-dropdown" disabled class="form-control" data-toggle="select2"></select>
+                                                      <label>Starting cell number:</label>
+                                                      <select id="starting_cell_number" name="starting_cell_number" onchange="handleCellNumberChange()" disabled class="form-control" data-toggle="select2"></select>
+                                                      <label>Ending cell number:</label>
+                                                      <select id="ending_cell_number" name="ending_cell_number" disabled class="form-control" data-toggle="select2"></select>
                                                     </div>
                                                     <div class="form-group">
                                                       <label for="formFile" class="form-label">Upload CSV File:</label>
@@ -85,20 +85,7 @@
     </div>
     <!-- End Page-content -->
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    2020 © Xeloro.
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-right d-none d-sm-block">
-                        Design &amp; Develop by Myra
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include 'footer.html' %}
 
 </div>
 

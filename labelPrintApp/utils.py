@@ -5,6 +5,4 @@ def hex_to_rgb(hex_code):
     blue = int(hex_code[4:6], 16)
     return red, green, blue
 
-hex_code = '#FFA500'
-red,green,blue = hex_to_rgb(hex_code)
-print(red,green,blue)    
+  

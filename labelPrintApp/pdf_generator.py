@@ -20,16 +20,16 @@ def process_uploaded_file(request, uploaded_file):
     # Retrieve form data
     entire_sheet_dropdown = request.POST.get('entire-sheet-dropdown')
     selected_label = request.POST.get('selectedLabel')
-    rows_dropdown = request.POST.get('rows-dropdown')
-    columns_dropdown = request.POST.get('columns-dropdown')
+    starting_cell_number = request.POST.get('starting_cell_number')
+    ending_cell_number = request.POST.get('ending_cell_number')
 
     if entire_sheet_dropdown:
         entire_sheet_dropdown = int(entire_sheet_dropdown)
         label_info = label_data[entire_sheet_dropdown]
     else:
         selected_label = int(selected_label)
-        row_num = int(rows_dropdown)
-        column_num = int(columns_dropdown)
+        starting_cell = int(starting_cell_number)
+        ending_cell = int(ending_cell_number)
         label_info = label_data[selected_label]
 
 
@@ -70,7 +70,7 @@ def process_uploaded_file(request, uploaded_file):
     if entire_sheet_dropdown:
         return process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin, label_info, data)
     else:
-        return process_specific_cell(request, pdf, left_right_margin, label_info, data, row_num, column_num)
+        return process_specific_cell(request, pdf, left_right_margin, label_info, data, starting_cell, ending_cell)
 
 def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin, label_info, data):
     # Generate the PDF with entire sheet data
@@ -196,10 +196,10 @@ def process_entire_sheet(request, pdf, entire_sheet_dropdown, left_right_margin,
         else:
             return render(request,'labelPrintApp/result.html',{'message':'failed'})
     else:
-        return render(request,'labelPrintApp/result.html',{'message':'Excluding title row, CSV file no. of rows and no. of cells you want to print did not match'})     
+        return render(request,'labelPrintApp/result.html',{'message': f'Excluding Title Row in the CSV File you uploaded, Total Number of Row Data should be exactly {entire_sheet_dropdown}'})     
 
 
-def process_specific_cell(request, pdf, left_right_margin, label_info, data, row_num, column_num):
+def process_specific_cell(request, pdf, left_right_margin, label_info, data, starting_cell, ending_cell):
     # Generate the PDF with specific cell data
 
     # Generate the PDF with entire sheet data
@@ -220,16 +220,22 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
     qr_img_width = math.sqrt(qr_img_area)
 
                 
-    if(len(data)==1):                     
-        data_list = data[0]
-        datum=data_list[4]
-        del data_list[4]
+    if(len(data) == rows*columns):                     
         # Printing cells both rows and columns-wise
         for row in range(rows):
-            for col in range(columns):                           
+            for col in range(columns):
+                data_list = data[row * columns + col]
+                print(row*columns+col)
+                print(data_list)
+                datum = data_list.pop()    
+
                 # Outer cell frame maker
                 pdf.cell(cell_width, cell_height, '', border=0)
-                if(((row+1)==row_num) and ((col+1)==column_num)):
+                
+                # current cell
+                current_cell_number = row * columns + col + 1
+
+                if((current_cell_number >= starting_cell) and (current_cell_number <= ending_cell)):
                     if(datum.startswith("http")):
                         # Fetch the image from the web
                         image_url = ""+datum+""
@@ -265,8 +271,8 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
                     pdf.image(qr_img_path, x=pdf.get_x()-cell_width+in_cx, y=pdf.get_y()+in_cy, h=qr_img_height, w=qr_img_width)
 
                     # Remove the temporary QR code image file
-                    # if os.path.exists(qr_img_path):
-                    #     os.remove(qr_img_path)
+                    if os.path.exists(qr_img_path):
+                        os.remove(qr_img_path)
 
                     # adjustment of coordinates
                     reset_x = pdf.get_x()
@@ -325,4 +331,4 @@ def process_specific_cell(request, pdf, left_right_margin, label_info, data, row
         else:
             return render(request,'labelPrintApp/result.html',{'message':'failed'})
     else: 
-        return render(request,'labelPrintApp/result.html',{'message':'There should be only one row excluding title row'})
+        return render(request,'labelPrintApp/result.html',{'message':f'Excluding Title Row in the CSV File you uploaded, Total Number Of Row Data need to be exactly {rows*columns}'})
