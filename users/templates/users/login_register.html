@@ -2,34 +2,33 @@
 {% load static %}
 {% block content %}
 <main>
-
-    <!-- breadcrumb area start -->
-    <div style="height:50px;" class="breadcrumb__area breadcrumb-height p-relative grey-bg" data-background="assets/img/breadcrumb/breadcrumb.jpg" style="background-image: url(&quot;assets/img/breadcrumb/breadcrumb.jpg&quot;);">
-       <div class="breadcrumb__scroll-bottom smooth">
-          <a href="#login">
-             <i class="far fa-arrow-down"></i>
-          </a>
-       </div>
-       <div class="container">
-          <div class="row">
-             <div class="col-xxl-12">
-                <div class="breadcrumb__content text-center">
-                  {% if page  == 'register' %}
-                  <h3 class="breadcrumb__title">Register to generate Label Sticker</h3>
-                  {% else %}
-                  <h3 class="breadcrumb__title">Login to generate Label Sticker</h3>
-                  {% endif %}
-                   
-                   <div class="breadcrumb__list">
-                      <span><a href="{% url 'home' %}">Home</a></span>
-                      <span class="dvdr"><i class="fa fa-angle-right"></i></span>
-                      <small style="font-size: 1.1rem; font-style:bold;">Any help? +977-9864272700</small>
-                   </div>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
+   <!-- breadcrumb area start -->   
+   <div style="height:50px;" class="breadcrumb__area breadcrumb-height p-relative grey-bg" data-background="{% static 'quitox/assets/img/breadcrumb/breadcrumb.jpg' %}" style="background-image: url(&quot;assets/img/breadcrumb/breadcrumb.jpg&quot;);">
+   <div class="breadcrumb__scroll-bottom smooth">
+      <a href="#login">
+         <i class="far fa-arrow-down"></i>
+      </a>
+   </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-xxl-12">
+               <div class="breadcrumb__content text-center">
+                  <h4 class="breadcrumb__title">To Print Stickers</h4>
+                  <div class="breadcrumb__list">
+                     <span><a href="{% url 'home' %}">Home</a></span>
+                     <span class="dvdr"><i class="fa fa-angle-right"></i></span>
+                     {% if page  == 'register' %}
+                        <span>Register</span>
+                     {% else %}
+                        <span>Login</span>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+    
     <!-- breadcrumb area end -->
 
       <!--login-area-start -->

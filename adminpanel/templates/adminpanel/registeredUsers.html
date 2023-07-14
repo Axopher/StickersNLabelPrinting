@@ -37,38 +37,41 @@
                                         </form>
                                     </div>
                                 </div>
-
                                 <div class="row" style="margin-top:2rem;">
                                     <div class="col-sm-12">
-                                        <table id="basic-datatable"
-                                            class="table dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
-                                            role="grid" aria-describedby="basic-datatable_info" style="width: 1195px;">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th>Phone Number</th>
-                                                    <th>Username</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-
-
-                                            <tbody>
-                                                {% for profile in profiles %}
-                                                <tr role="row" class="odd">
-                                                    <td>{{profile.phone}}</td>
-                                                    <td>{{profile.username}}</td>
-                                                    {% if profile.latest_payment_status %}
-                                                    <td>{{ profile.latest_payment_status }}</td>
-                                                    {% else %}
-                                                    <td>No payment instance found.</td>
-                                                    {% endif %}
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-striped table-nowrap mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Phone Number</th>
+                                                        <th>Username</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for profile in profiles %}
+                                                    <tr>
+                                                        <td>{{profile.phone}}</td>
+                                                        <td>{{profile.username}}</td>
+                                                        {% if profile.latest_payment_status %}
+                                                        <td>
+                                                            {% if profile.latest_payment_status == 'active' %}
+                                                            <span class="badge badge-soft-success">{{profile.latest_payment_status}}</span>
+                                                            {% else %}
+                                                            <span class="badge badge-soft-dark">{{profile.latest_payment_status}}</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        {% else %}
+                                                        <td>No payment instance found.</td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}                                                                                             
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                {% include 'pagination.html' with queryset=payments custom_range=custom_range %}
+                                {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
                             </div>
 
                         </div> <!-- end card body-->
